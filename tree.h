@@ -1,0 +1,1 @@
+void tree_generator (int nodos, int max_hijos);
