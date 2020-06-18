@@ -9,15 +9,14 @@
 static ap_uint<10> tree[TREE_SIZE];
 
 // Declaracion de arbol estático
- void busqueda_cam (ap_uint<NODE_BITS> nodo, ap_uint<RELATION_BITS> relationship, bool order, hls::stream<ap_uint<WORD_BITS>> *result) {
+ void busqueda_cam (ap_uint<NODE_BITS> nodo, ap_uint<RELATION_BITS> relationship, bool order, hls::stream<ap_uint<WORD_BITS>> &result) {
 	unsigned  position_hi, position_lo = 0;
-	int a = 3;
 	if (order) {  //Significa que buscamos nuestros hijos
 		position_lo = (RELATION_BITS+NODE_BITS);
 		position_hi = WORD_BITS - 1;
 	} else {
 		position_lo = RELATION_BITS;
-		position_hi = (RELATION_BITS+NODE_BITS)-1
+		position_hi = (RELATION_BITS+NODE_BITS)-1;
 	}  // Significa que buscamos nuestros padres
 	ap_uint<WORD_BITS> valor = 0;
 	ap_uint<RELATION_BITS> node_relation =0;
@@ -27,8 +26,8 @@ static ap_uint<10> tree[TREE_SIZE];
 			  if (valor == EOT)  break;
 			  else {
 				  node_relation = valor(1,0);
-				  compare_node = valor(position_lo,position_hi)
-				  if ((compare_node == nodo) && (relationship == node_relation))  result->write_nb(tree[i]);
+				  compare_node = valor(position_lo,position_hi);
+				  if ((compare_node == nodo) && (relationship == node_relation))  result.write_nb(tree[i]);
 			  	 //result->write_nb(
 			  }
 	}
