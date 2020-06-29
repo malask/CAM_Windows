@@ -1,0 +1,257 @@
+ID NODO			NUMERO DE HIJOS					RELACION			ID HIJOS
+1			3			1     2,3,4,
+2			3			2     5,6,7,
+3			2			1     8,9,
+4			4			1     10,11,12,256,
+5			0			1       SIN HIJOS
+6			2			1     13,14,
+7			2			2     15,16,
+8			0			0       SIN HIJOS
+9			3			1     17,18,19,
+10			1			0     20
+11			1			1     21
+12			1			1     22
+13			3			0     23,24,25,
+14			3			0     26,27,28,
+15			2			0     29,30,
+16			3			1     31,32,33,
+17			2			0     34,35,
+18			3			3     36,37,38,
+19			3			3     39,40,41,
+20			0			2       SIN HIJOS
+21			2			0     42,43,
+22			1			1     44
+23			1			3     45
+24			0			1       SIN HIJOS
+25			2			2     46,47,
+26			3			2     48,49,50,
+27			0			0       SIN HIJOS
+28			0			0       SIN HIJOS
+29			2			2     51,52,
+30			1			1     53
+31			1			3     54
+32			3			2     55,56,57,
+33			3			1     58,59,60,
+34			1			3     61
+35			1			0     62
+36			0			2       SIN HIJOS
+37			1			3     63
+38			0			2       SIN HIJOS
+39			1			1     64
+40			2			0     65,66,
+41			0			2       SIN HIJOS
+42			3			2     67,68,69,
+43			0			2       SIN HIJOS
+44			3			0     70,71,72,
+45			0			1       SIN HIJOS
+46			0			0       SIN HIJOS
+47			2			3     73,74,
+48			0			1       SIN HIJOS
+49			1			2     75
+50			2			2     76,77,
+51			1			1     78
+52			0			3       SIN HIJOS
+53			3			3     79,80,81,
+54			1			0     82
+55			3			1     83,84,85,
+56			1			1     86
+57			3			1     87,88,89,
+58			3			2     90,91,92,
+59			2			0     93,94,
+60			2			0     95,96,
+61			0			0       SIN HIJOS
+62			3			3     97,98,99,
+63			0			1       SIN HIJOS
+64			0			2       SIN HIJOS
+65			3			0     100,101,102,
+66			2			0     103,104,
+67			3			2     105,106,107,
+68			0			0       SIN HIJOS
+69			0			0       SIN HIJOS
+70			1			3     108
+71			1			3     109
+72			2			0     110,111,
+73			2			2     112,113,
+74			2			1     114,115,
+75			1			1     116
+76			1			0     117
+77			3			0     118,119,120,
+78			0			0       SIN HIJOS
+79			0			0       SIN HIJOS
+80			1			1     121
+81			2			2     122,123,
+82			1			1     124
+83			1			2     125
+84			0			1       SIN HIJOS
+85			3			1     126,127,128,
+86			3			3     129,130,131,
+87			2			2     132,133,
+88			1			1     134
+89			2			1     135,136,
+90			3			2     137,138,139,
+91			1			2     140
+92			0			0       SIN HIJOS
+93			0			1       SIN HIJOS
+94			1			2     141
+95			0			1       SIN HIJOS
+96			0			2       SIN HIJOS
+97			0			2       SIN HIJOS
+98			3			1     142,143,144,
+99			1			1     145
+100			3			2     146,147,148,
+101			0			3       SIN HIJOS
+102			2			1     149,150,
+103			2			3     151,152,
+104			2			1     153,154,
+105			2			0     155,156,
+106			3			3     157,158,159,
+107			2			2     160,161,
+108			2			0     162,163,
+109			3			2     164,165,166,
+110			3			1     167,168,169,
+111			3			0     170,171,172,
+112			0			1       SIN HIJOS
+113			0			0       SIN HIJOS
+114			3			1     173,174,175,
+115			2			0     176,177,
+116			3			3     178,179,180,
+117			3			1     181,182,183,
+118			1			3     184
+119			2			1     185,186,
+120			0			2       SIN HIJOS
+121			2			0     187,188,
+122			2			3     189,190,
+123			1			2     191
+124			1			0     192
+125			1			3     193
+126			2			1     194,195,
+127			1			0     196
+128			3			3     197,198,199,
+129			3			1     200,201,202,
+130			3			3     203,204,205,
+131			1			3     206
+132			2			0     207,208,
+133			1			0     209
+134			2			2     210,211,
+135			1			1     212
+136			1			1     213
+137			3			0     214,215,216,
+138			3			2     217,218,219,
+139			1			1     220
+140			3			0     221,222,223,
+141			1			2     224
+142			1			1     225
+143			3			1     226,227,228,
+144			3			2     229,230,231,
+145			3			1     232,233,234,
+146			1			1     235
+147			0			1       SIN HIJOS
+148			1			1     236
+149			1			0     237
+150			3			3     238,239,240,
+151			0			2       SIN HIJOS
+152			3			3     241,242,243,
+153			0			2       SIN HIJOS
+154			0			0       SIN HIJOS
+155			3			0     244,245,246,
+156			1			0     247
+157			3			0     248,249,250,
+158			2			0     251,252,
+159			0			0       SIN HIJOS
+160			1			0     253
+161			3			3     254,255,
+162			0			1       SIN HIJOS
+163			0			3       SIN HIJOS
+164			0			2       SIN HIJOS
+165			0			0       SIN HIJOS
+166			0			0       SIN HIJOS
+167			0			1       SIN HIJOS
+168			0			2       SIN HIJOS
+169			0			2       SIN HIJOS
+170			0			1       SIN HIJOS
+171			0			3       SIN HIJOS
+172			0			1       SIN HIJOS
+173			0			0       SIN HIJOS
+174			0			3       SIN HIJOS
+175			0			1       SIN HIJOS
+176			0			3       SIN HIJOS
+177			0			0       SIN HIJOS
+178			0			1       SIN HIJOS
+179			0			0       SIN HIJOS
+180			0			0       SIN HIJOS
+181			0			1       SIN HIJOS
+182			0			3       SIN HIJOS
+183			0			2       SIN HIJOS
+184			0			0       SIN HIJOS
+185			0			1       SIN HIJOS
+186			0			1       SIN HIJOS
+187			0			1       SIN HIJOS
+188			0			1       SIN HIJOS
+189			0			0       SIN HIJOS
+190			0			3       SIN HIJOS
+191			0			3       SIN HIJOS
+192			0			1       SIN HIJOS
+193			0			3       SIN HIJOS
+194			0			3       SIN HIJOS
+195			0			1       SIN HIJOS
+196			0			1       SIN HIJOS
+197			0			2       SIN HIJOS
+198			0			3       SIN HIJOS
+199			0			0       SIN HIJOS
+200			0			3       SIN HIJOS
+201			0			3       SIN HIJOS
+202			0			0       SIN HIJOS
+203			0			3       SIN HIJOS
+204			0			1       SIN HIJOS
+205			0			0       SIN HIJOS
+206			0			0       SIN HIJOS
+207			0			3       SIN HIJOS
+208			0			0       SIN HIJOS
+209			0			1       SIN HIJOS
+210			0			1       SIN HIJOS
+211			0			2       SIN HIJOS
+212			0			2       SIN HIJOS
+213			0			0       SIN HIJOS
+214			0			3       SIN HIJOS
+215			0			3       SIN HIJOS
+216			0			1       SIN HIJOS
+217			0			3       SIN HIJOS
+218			0			3       SIN HIJOS
+219			0			0       SIN HIJOS
+220			0			2       SIN HIJOS
+221			0			1       SIN HIJOS
+222			0			2       SIN HIJOS
+223			0			1       SIN HIJOS
+224			0			2       SIN HIJOS
+225			0			1       SIN HIJOS
+226			0			2       SIN HIJOS
+227			0			2       SIN HIJOS
+228			0			0       SIN HIJOS
+229			0			2       SIN HIJOS
+230			0			1       SIN HIJOS
+231			0			0       SIN HIJOS
+232			0			1       SIN HIJOS
+233			0			1       SIN HIJOS
+234			0			0       SIN HIJOS
+235			0			1       SIN HIJOS
+236			0			2       SIN HIJOS
+237			0			3       SIN HIJOS
+238			0			2       SIN HIJOS
+239			0			0       SIN HIJOS
+240			0			2       SIN HIJOS
+241			0			0       SIN HIJOS
+242			0			2       SIN HIJOS
+243			0			2       SIN HIJOS
+244			0			2       SIN HIJOS
+245			0			1       SIN HIJOS
+246			0			0       SIN HIJOS
+247			0			3       SIN HIJOS
+248			0			3       SIN HIJOS
+249			0			3       SIN HIJOS
+250			0			0       SIN HIJOS
+251			0			1       SIN HIJOS
+252			0			3       SIN HIJOS
+253			0			1       SIN HIJOS
+254			0			2       SIN HIJOS
+255			0			0       SIN HIJOS
+256			0			0       SIN HIJOS
