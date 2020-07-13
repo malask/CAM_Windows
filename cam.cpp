@@ -5,10 +5,9 @@
 //#define NODE_MASK 0xF // ((1<<4)-1) Cada nodo ocupa 4 bits. Esto es una máscara que he creado para
 //#define RELATION_MASK 0x3 // ((1<<2)-1 )Expresarlo en hexadecimal.
 //#define TREE_SIZE 1024
-#define SEARCH_MODE 0
 
 // Declaracion de arbol estático
- void busqueda_cam (edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool order, hls::stream<node_t> *result) {
+ void busqueda_cam (edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> *result) {
 	/*unsigned  position_hi, position_lo = 0;
 	if (order) {  //Significa que buscamos nuestros hijos
 		position_lo = ;
@@ -18,12 +17,12 @@
 		position_hi = (RELATION_BITS+NODE_BITS)-1;
 	}  // Significa que buscamos nuestros padres */
 #ifndef __SYNTHESIS__
-
 	int accesos = 0;
 #endif
 	ap_uint<EDGE_BITS> valor = 0;
 	ap_uint<REL_BITS> node_relation =0;
 	ap_uint<NODE_BITS> compare_node=0;
+	bool flag = false;
 	for (int i = 0; i < TREE_SIZE; i++) {
 #ifndef __SYNTHESIS__
 	accesos++;
@@ -31,10 +30,23 @@
 			  valor = tree[i];
 
 				  node_relation = valor(1,0);
-				  if (order) compare_node = SRC_NODE(valor);
-				  else compare_node = DST_NODE(valor);
-				  if ((compare_node == nodo) && (relationship == node_relation))  result->write_nb(compare_node);
-			  	 //result->write_nb(
+				  if (fatherSearch) compare_node = DST_NODE(valor);
+				  else compare_node = SRC_NODE(valor);
+
+// Este if es para buscar al padre del nodo proporcionado a la CAM
+				  if ((compare_node == nodo) && (relationship == node_relation) && fatherSearch) {
+					  result->write(SRC_NODE(valor));
+					  break;
+				  }
+// Este if es para buscar los hijos del nodo proporcionado
+				  if ((compare_node == nodo) && (relationship == node_relation) && !fatherSearch) {
+					  result->write(DST_NODE(valor));
+					  flag=true;
+// ------------- Para el hijo aún no hay condición de parada establecida. Estudiaremos cuál es la condicion de parada en funcion del tipo de búsqueda recorrido.
+				  }
+//				  if (flag && (compare_node !=nodo )) break;
+// ------------- Modificar el anterior if si queremos hacer una busqueda secuencial sin condición de parada para el padre
+
 
 	}
 #ifndef __SYNTHESIS__
