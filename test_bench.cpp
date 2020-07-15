@@ -7,7 +7,7 @@
 using namespace std;
 
 
-int main (int argc, char *argv[]) {
+int main () {
 	ifstream infile;
 	string line;
 	unsigned int cnt;
@@ -39,12 +39,12 @@ int main (int argc, char *argv[]) {
 	}
 	bool buscarPadre = true;
 
-	for (unsigned int idx = 0; idx < TREE_SIZE; idx++) {
+	/*for (unsigned int idx = 0; idx < TREE_SIZE; idx++) {
 		cout << "Le�do: " << tree[idx].to_uint() << endl;
 		cout << "Nodo SRC (PADRE) " << SRC_NODE(tree[idx]).to_uint() << endl;
 		cout << "Nodo DST (HIJO)" << DST_NODE(tree[idx]).to_uint() << endl;
 
-	}
+	}*/
 	//prueba= (rand() % TREE_SIZE-2)+2;
 	prueba = 692;
 	// leer el padre de un nodo busqueda_cam(arbol,192,rel,true,&salida_hw);
