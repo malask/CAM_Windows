@@ -105,8 +105,14 @@
 	typedef ap_uint<NODE_BITS> node_t;
 	typedef ap_uint<REL_BITS> rel_t;
 
-	void busqueda_cam (edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2, hls::stream<node_t> &out);
+	void cam_top (edge_t tree1 [TREE_SIZE/2], edge_t tree2[TREE_SIZE/2],
+				  node_t nodo, rel_t relationship, bool fatherSearch,
+				  hls::stream<node_t> &result);
 
+	void busqueda_cam2 (edge_t tree[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result,hls::stream<node_t> &result2);
+	//void busqueda_cam (edge_t tree[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
+	//void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2, hls::stream<node_t> &out);
+	void combinar2(hls::stream<node_t> &in1, hls::stream<node_t> &in2,
+			hls::stream<node_t> &in3, hls::stream<node_t> &in4, hls::stream<node_t> &out);
 #endif
 
