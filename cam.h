@@ -1,7 +1,7 @@
 
 //Incluir cabecera parae evitar recursividades.
-#ifndef CAM_H_
-#define CAM_H_
+#ifndef CAM_H
+#define CAM_H
 	#include "hls_stream.h"
 	#include "ap_int.h"
 
@@ -99,14 +99,22 @@
 	#define EDGE_BITS (NODE_BITS*2 + REL_BITS)
 	#define SRC_NODE(e) ((e)(EDGE_BITS-1,EDGE_BITS-NODE_BITS))
 	#define DST_NODE(e) ((e)(EDGE_BITS-NODE_BITS-1,REL_BITS))
-#define EOT TREE_SIZE+1
+	#define EOT TREE_SIZE+1
+	#define HW_COSIM 1
+
+
 	typedef ap_uint<EDGE_BITS> edge_t;
 	typedef ap_uint<NODE_BITS> node_t;
 	typedef ap_uint<REL_BITS> rel_t;
 
-	void top_function(edge_t tree1[TREE_SIZE/2], edge_t tree2[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void busqueda_cam (edge_t tree[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result1, hls::stream<node_t> &result2);
-	void combinar(hls::stream<node_t> &in1,hls::stream<node_t> &in2,hls::stream<node_t> &in3,hls::stream<node_t> &in4, hls::stream<node_t> &result);
+	void cam_top (edge_t tree[TREE_SIZE],
+			node_t nodo, rel_t relationship, bool fatherSearch,
+			hls::stream<node_t> &result);
+	void preprocessor_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<edge_t> &result, hls::stream<edge_t> &result2);
+	void busqueda_cam2 (hls::stream<edge_t> &result_a,node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &final_result);
+	//void busqueda_cam (edge_t tree[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
+	//void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2, hls::stream<node_t> &out);
+	void combinar2(hls::stream<node_t> &in1, hls::stream<node_t> &in2,
+			hls::stream<node_t> &in3, hls::stream<node_t> &in4, hls::stream<node_t> &out);
 #endif
-
 
