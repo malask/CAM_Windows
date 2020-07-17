@@ -43,8 +43,9 @@ int main (int argc, char *argv[]) {
 	} El metodo de leer el árbol sabemos que funciona correctamente. */
 	//prueba= (rand() % TREE_SIZE-2)+2;
 	prueba=87;
+
 	// leer el padre de un nodo busqueda_cam(arbol,192,rel,true,&salida_hw);
-	top_function(tree,prueba,rel,buscarPadre,salida_hw);
+	top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
 	//if ((salida_hw.read(salida_lectura))==false) salida_lectura = 0;
 
 	if (salida_hw.empty()) {
