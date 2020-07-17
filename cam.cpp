@@ -10,10 +10,11 @@
 
 
 void top_function(edge_t tree1[TREE_SIZE/2], edge_t tree2[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result){
-	hls::stream<node_t> in1("ENTRADA_FOR1");
+	static hls::stream<node_t> in1("ENTRADA_FOR1");
 	#pragma HLS STREAM variable=in1 depth=8 dim=1
-	hls::stream<node_t> in2("ENTRADA_FOR2");
+	static hls::stream<node_t> in2("ENTRADA_FOR2");
 	#pragma HLS STREAM variable=in2 depth=8 dim=1
+#pragma HLS DATAFLOW
 	busqueda_cam(tree1,nodo,relationship,fatherSearch,in1);
 	busqueda_cam(tree2,nodo,relationship,fatherSearch,in2);
 	combinar(in1,in2,result);
@@ -64,24 +65,25 @@ if (fatherSearch) {
 }
 
 void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2, hls::stream<node_t> &result) {
-	node_t valor1=0,valor2=0;
-	while(!in1.empty()){
-		valor1=in1.read();
-#ifndef __SYNTHESIS__
-		std::cout << "Leido valor " << valor1 << std::endl;
-#endif
-		if (valor1 != EOT) result.write(valor1);
+	bool end_1 = false, end_2 = false;
+		bool isData_1 = false, isData_2 = false;
+		node_t val1,val2;
+		do {
+#pragma HLS PIPELINE
+			isData_1 = in1.read_nb(val1);
+			isData_2 = in2.read_nb(val2);
+			if (isData_1) {
+				if (val1 == EOT) end_1=true;
+				else result.write(val1);
+			}
+			//Aquí
+			if (isData_2) {
+				if (val2 == EOT)end_2=true;
+				else result.write(val2);
+			}
+		} while ((!end_1) || (!end_2));
 
-	}
-	while(!in2.empty()){
-		valor2=in2.read();
-#ifndef __SYNTHESIS__
-		std::cout << "Leido valor " << valor2 << std::endl;
-#endif
-		if (valor2 != EOT) result.write(valor2);
-	}
-
-	result.write(EOT);
+		result.write(EOT);
 }
 
  //BUSCAR SOFTWARE DE GENRACION DE ARBOLES
