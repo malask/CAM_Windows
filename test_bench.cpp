@@ -6,14 +6,17 @@
 
 using namespace std;
 
+
+
+
 int printResult(hls::stream<node_t> &salida_hw, bool fatherOrChild, unsigned int prueba){
 	node_t salida_lectura;
 	if (salida_hw.empty()) {
-			std::cout<< " ---- Failed test. Check test or CAM solution for node == " << prueba << " ---- " <<std::endl;
+			std::cout<< " ---- No nodes detected for this case. Try again ---- " << prueba << " ---- " <<std::endl;
 			return -1;
 		} else {
-			if (fatherOrChild) std::cout << "Node " << prueba << " 's father is:  " << std::endl;
-			else std::cout << "Node " << prueba << " 's children is/are: " << std::endl;
+			if (fatherOrChild){ std::cout << "Node " << prueba << " 's father is:  " << std::endl;
+			}else std::cout << "Node " << prueba << " 's children is/are: " << std::endl;
 				while(!salida_hw.empty()){
 					salida_lectura = salida_hw.read();
 					if (salida_lectura == EOT) {
@@ -25,71 +28,86 @@ int printResult(hls::stream<node_t> &salida_hw, bool fatherOrChild, unsigned int
 	return 0;
 }
 
-int main () {
+int main (int argc, char *argv[]) {
 	ifstream infile;
 	string line;
 	unsigned int cnt;
-	edge_t tree[TREE_SIZE] = 0;
-	//edge_t tree2[TREE_SIZE];
-
+	edge_t tree[TREE_SIZE];
 	srand((unsigned)time(0));
 
 
-	node_t salida_lectura, prueba_mejor, prueba_peor, prueba_mitad = 0;
-	edge_t lectura_mejor, lectura_peor, lectura_mitad=0;
+	node_t salida_lectura, prueba = 0;
 	rel_t rel = 0;
 
 
-	hls::stream<node_t> salida_hw;
+	hls::stream<node_t> salida_hw("CANAL_RESULTADO");
 
 	//Leer el arbol del fichero
 	//infile.open(TREE_FILE,ios::in);
 	infile.open(TREE_FILE, ios::in);
 	if (!infile.is_open()) {
-		cout << "Archivo con los datos del ï¿½rbol no abierto" << endl;
+		cout << "Archivo con los datos del árbol no abierto" << endl;
 	}
 	cout << "FICHERO DE ENTRADA CON NUMERO DE DATOS " << TREE_SIZE << " BUSQUEDA " << SEARCH_MODE <<  endl;
 	cnt = 0;
 	while (getline(infile,line)) {
-		//cout << cnt << " Arco leido: " << line << endl;
+		// cout << cnt << " Arco leído: " << line << endl; Sabemos que funciona correctamente.
 		tree[cnt++] = stoul(line);
 	}
-
-	/*for (unsigned int idx = 0; idx < TREE_SIZE; idx++) {
-			cout << "Leï¿½do: "<< idx << " " << tree[idx].to_uint() << endl;
-			cout << "Nodo SRC (PADRE) " << SRC_NODE(tree[idx]).to_uint() << endl;
-			cout << "Nodo DST (HIJO)" << DST_NODE(tree[idx]).to_uint() << endl;
-
-		}*/
-
-
 	bool buscarPadre = true;
-	lectura_peor = tree[cnt-1];
-	lectura_mejor = tree[0];
-	unsigned int mitad = (cnt-1)/2;
-	lectura_mitad = tree[mitad];
-	unsigned int prueba = DST_NODE(lectura_peor).to_uint();
-
+	std::cout << "---- CASE TESTING FOR PARENT CASES ---- " << std::endl;
 	std::cout << "---- Testing nº of access for worst case (i = N) ---- " << std::endl;
-	cam_top(tree,prueba,rel,true,salida_hw);
+
+	prueba = TREE_SIZE-1;
+
+	top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
 	printResult(salida_hw,true,prueba);
 	std::cout << "---- Finalized test for worst case ---- " << std::endl;
 	std::cout <<" " << std::endl;
 
 
 	std::cout << "---- Testing nº of access for best case (i = 1) ---- " << std::endl;
-	prueba = DST_NODE(lectura_mejor).to_uint();
-	cam_top(tree,&tree[TREE_SIZE/2],prueba,rel,true,salida_hw);
+	prueba = 1;
+	top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
 	printResult(salida_hw,true,prueba);
-	std::cout << "---- Finalized test for best case ---- ";
+	std::cout << "---- Finalized test for best case ---- " << std::endl;
 	std::cout <<" " << std::endl;
 
-	std::cout << "---- Testing nº of access for promedium case (i = N/2)" << std::endl;
-	prueba = DST_NODE(lectura_mitad).to_uint();
-	cam_top(tree,&tree[TREE_SIZE/2], prueba,rel,true,salida_hw);
-	printResult(salida_hw,true,prueba);
-	std::cout << "---- Finalized test por promedium case ---- " << std::endl;
 
+	std::cout << "---- Testing nº of access for promedium case (i = N/2)" << std::endl;
+	prueba = TREE_SIZE/2;
+	top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+	printResult(salida_hw,true,prueba);
+
+	std::cout << "---- Finalized test for promedium case ---- " << std::endl;
+	std::cout << "---- Finalized test for PARENT cases. Starting CHILDREN cases----" << std::endl;
+
+	std::cout << "---- CASE TESTING FOR CHILDREN CASES ---- " << std::endl;
+		buscarPadre = false;
+		std::cout << "---- Testing nº of access for worst case (i = N). ---- " << std::endl;
+
+		prueba = TREE_SIZE-1;
+
+		top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+		printResult(salida_hw,false,prueba);
+		std::cout << "---- Finalized test for worst case ---- " << std::endl;
+		std::cout <<" " << std::endl;
+
+
+		std::cout << "---- Testing nº of access for best case (i = 1) ---- " << std::endl;
+		prueba = 1;
+		top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+		printResult(salida_hw,false,prueba);
+		std::cout << "---- Finalized test for best case ---- " << std::endl;
+		std::cout <<" " << std::endl;
+
+
+		std::cout << "---- Testing nº of access for promedium case (i = N/2)" << std::endl;
+		prueba = TREE_SIZE/2;
+		top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+		printResult(salida_hw,false,prueba);
+	std::cout <<" " << std::endl;
 
 	return 0;
 }
+
