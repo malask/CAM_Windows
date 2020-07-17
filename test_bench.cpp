@@ -19,7 +19,7 @@ int main (int argc, char *argv[]) {
 	rel_t rel = 0;
 
 
-	hls::stream<node_t> salida_hw;
+	hls::stream<node_t> salida_hw("CANAL_RESULTADO");
 
 	//Leer el arbol del fichero
 	//infile.open(TREE_FILE,ios::in);

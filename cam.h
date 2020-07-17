@@ -106,7 +106,7 @@
 
 	void top_function(edge_t tree1[TREE_SIZE/2],edge_t tree2[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
 	void busqueda_cam (edge_t tree[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-
+	void combinar(hls::stream<node_t> &in1,hls::stream<node_t> &in2, hls::stream<node_t> &result);
 #endif
 
 

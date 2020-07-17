@@ -10,8 +10,13 @@
 
 
 void top_function(edge_t tree1[TREE_SIZE/2], edge_t tree2[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result){
-	busqueda_cam(tree1,nodo,relationship,fatherSearch,result);
-	busqueda_cam(tree2,nodo,relationship,fatherSearch,result);
+	hls::stream<node_t> in1("ENTRADA_FOR1");
+	#pragma HLS STREAM variable=in1 depth=8 dim=1
+	hls::stream<node_t> in2("ENTRADA_FOR2");
+	#pragma HLS STREAM variable=in2 depth=8 dim=1
+	busqueda_cam(tree1,nodo,relationship,fatherSearch,in1);
+	busqueda_cam(tree2,nodo,relationship,fatherSearch,in2);
+	combinar(in1,in2,result);
 }
 void busqueda_cam (edge_t tree[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result) {
 	/*unsigned  position_hi, position_lo = 0;
@@ -56,6 +61,27 @@ if (fatherSearch) {
 	std::cout << "El numero de lecturas del arbol han sido " << accesos << std::endl;
 #endif
 	return;
+}
+
+void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2, hls::stream<node_t> &result) {
+	node_t valor1=0,valor2=0;
+	while(!in1.empty()){
+		valor1=in1.read();
+#ifndef __SYNTHESIS__
+		std::cout << "Leido valor " << valor1 << std::endl;
+#endif
+		if (valor1 != EOT) result.write(valor1);
+
+	}
+	while(!in2.empty()){
+		valor2=in2.read();
+#ifndef __SYNTHESIS__
+		std::cout << "Leido valor " << valor2 << std::endl;
+#endif
+		if (valor2 != EOT) result.write(valor2);
+	}
+
+	result.write(EOT);
 }
 
  //BUSCAR SOFTWARE DE GENRACION DE ARBOLES
