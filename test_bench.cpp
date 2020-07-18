@@ -8,7 +8,6 @@ using namespace std;
 
 
 
-
 int printResult(hls::stream<node_t> &salida_hw, bool fatherOrChild, unsigned int prueba){
 	node_t salida_lectura;
 	if (salida_hw.empty()) {
@@ -54,6 +53,9 @@ int main (int argc, char *argv[]) {
 		// cout << cnt << " Arco leído: " << line << endl; Sabemos que funciona correctamente.
 		tree[cnt++] = stoul(line);
 	}
+	fillHashTables(tree);
+
+
 	bool buscarPadre = true;
 	std::cout << "---- CASE TESTING FOR PARENT CASES ---- " << std::endl;
 	std::cout << "---- Testing nº of access for worst case (i = N) ---- " << std::endl;
@@ -81,6 +83,7 @@ int main (int argc, char *argv[]) {
 	printResult(salida_hw,true,prueba);
 
 	std::cout << "---- Finalized test for promedium case ---- " << std::endl;
+
 	std::cout << "---- Finalized test for PARENT cases. Starting CHILDREN cases----" << std::endl;
 
 	std::cout << "---- CASE TESTING FOR CHILDREN CASES ---- " << std::endl;
@@ -110,5 +113,6 @@ int main (int argc, char *argv[]) {
 	std::cout <<" " << std::endl;
 
 	return 0;
+
 }
 

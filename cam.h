@@ -99,14 +99,15 @@
 	#define EDGE_BITS (NODE_BITS*2 + REL_BITS)
 	#define SRC_NODE(e) ((e)(EDGE_BITS-1,EDGE_BITS-NODE_BITS))
 	#define DST_NODE(e) ((e)(EDGE_BITS-NODE_BITS-1,REL_BITS))
-#define EOT TREE_SIZE+1
+#define EOT 0
 	typedef ap_uint<EDGE_BITS> edge_t;
 	typedef ap_uint<NODE_BITS> node_t;
 	typedef ap_uint<REL_BITS> rel_t;
+	typedef ap_uint<NODE_BITS> index_t;
 
 	void top_function(edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void preprocessor_cam(edge_t tree[TREE_SIZE],node_t nodo,bool fatherSearch, hls::stream<edge_t> &send1, hls::stream<edge_t> &send2);
-	void busqueda_cam (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<edge_t> &receive, hls::stream<node_t> &result);
+	void busqueda_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
+	void fillHashTables (edge_t tree[TREE_SIZE]);
 	void combinar(hls::stream<node_t> &in1,hls::stream<node_t> &in2, hls::stream<node_t> &result);
 #endif
 
