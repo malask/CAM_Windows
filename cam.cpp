@@ -9,22 +9,81 @@
 // Declaracion de arbol estático
 
 
-void top_function(edge_t tree1[TREE_SIZE/2], edge_t tree2[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result){
-	static hls::stream<node_t> in1("ENTRADA_FOR1");
+void top_function(edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result){
+	static hls::stream<edge_t> in1("ENTRADA_FOR1");
 	#pragma HLS STREAM variable=in1 depth=8 dim=1
-	static hls::stream<node_t> in2("ENTRADA_FOR2");
+	static hls::stream<edge_t> in2("ENTRADA_FOR2");
 	#pragma HLS STREAM variable=in2 depth=8 dim=1
 	static hls::stream<node_t> in1b;
 	#pragma HLS STREAM variable=in1b depth=8 dim=1
 	static hls::stream<node_t> in2b;
 	#pragma HLS STREAM variable=in2b depth=8 dim=1
 #pragma HLS DATAFLOW
-	busqueda_cam(tree1, nodo, relationship, fatherSearch, in1,in1b);
-	busqueda_cam(tree2, nodo, relationship, fatherSearch, in2,in2b);
-	combinar(in1,in2,in1b,in2b,result);
+	preprocessor_cam(tree,nodo,fatherSearch,in1,in2);
+	busqueda_cam(nodo, relationship, fatherSearch, in1,in1b);
+	busqueda_cam(nodo, relationship, fatherSearch, in2,in2b);
+	combinar(in1b,in2b,result);
 }
-void busqueda_cam (edge_t tree [TREE_SIZE/2], node_t nodo, rel_t relationship,
-		bool fatherSearch, hls::stream<node_t> &result1,hls::stream<node_t> &result2) {
+
+void preprocessor_cam(edge_t tree[TREE_SIZE], node_t nodo, bool fatherSearch,hls::stream<edge_t> &send1, hls::stream<edge_t> &send2) {
+	ap_uint<EDGE_BITS> nodo1,nodo2 =0;
+	if (nodo==1 && fatherSearch) {
+		send1.write(EOT);
+		send2.write(EOT);
+	}else{
+	for (int i=0;i<TREE_SIZE;i+=2){
+#pragma HLS PIPELINE
+		nodo1 = tree[i];
+		nodo2 = tree[i+1];
+		send1.write(nodo1);
+		send2.write(nodo2);
+		}
+	send1.write(EOT);
+	send2.write(EOT);
+	}
+
+}
+void busqueda_cam(node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<edge_t> &receive, hls::stream<node_t> &result){
+	ap_uint<EDGE_BITS> readData;
+	ap_uint<REL_BITS> node_relation;
+	ap_uint<NODE_BITS> compare_node;
+	bool end=false;
+	bool isData;
+	if (fatherSearch) {
+		while (!end) {
+#pragma HLS PIPELINE
+			isData = receive.read_nb(readData);
+			if (isData){
+				if (readData == EOT) end = true;
+				else {
+				node_relation = readData(1,0);
+				compare_node = DST_NODE(readData);
+				if (compare_node==nodo && relationship == node_relation) {
+					result.write(SRC_NODE(readData));
+
+				}
+			}
+		}
+		}
+	} else {
+		while (!end) {
+		#pragma HLS PIPELINE
+					isData = receive.read_nb(readData);
+					if (isData){
+						if (readData == EOT) end = true;
+						else {
+						node_relation = readData(1,0);
+						compare_node = SRC_NODE(readData);
+						if (compare_node==nodo && relationship == node_relation) result.write(DST_NODE(readData));
+
+						}
+					}
+				}
+		}
+	result.write(EOT);
+}
+/*void busqueda_cam (node_t nodo, rel_t relationship,
+		bool fatherSearch, hls::stream<node_t> &send1,hls::stream<node_t> &send2) {
 #ifndef __SYNTHESIS__
 	int accesos = 0;
 #endif
@@ -33,8 +92,8 @@ void busqueda_cam (edge_t tree [TREE_SIZE/2], node_t nodo, rel_t relationship,
 	ap_uint<NODE_BITS> compare_node_min, compare_node_max, founded_node=0;
 	bool flag_min, flag_max= false;
 	if (nodo == 1 && fatherSearch) {
-		result1.write(EOT);
-		result2.write(EOT);
+		send1.write(EOT);
+		send2.write(EOT);
 		return;
 	}
 if (fatherSearch) {
@@ -93,35 +152,28 @@ if (fatherSearch) {
 #endif
 	return;
 }
-
-void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2, hls::stream<node_t> &in3, hls::stream<node_t> &in4, hls::stream<node_t> &result) {
-	bool end_1 = false, end_2 = false, end_3 = false, end_4 = false;
-		bool isData_1 = false, isData_2 = false, isData_3 = false, isData_4 = false;
-		node_t val1,val2,val3,val4;
+*/
+void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2,hls::stream<node_t> &result) {
+		bool end[2] = {false,false};
+#pragma HLS ARRAY_PARTITION variable=end complete dim=1
+		bool isData_1 = false, isData_2 = false;
+		node_t val1,val2;
 		do {
 #pragma HLS PIPELINE
 			isData_1 = in1.read_nb(val1);
 			isData_2 = in2.read_nb(val2);
-			isData_3 = in3.read_nb(val3);
-			isData_4 = in4.read_nb(val4);
+
 			if (isData_1) {
-				if (val1 == EOT) end_1=true;
+				if (val1 == EOT) end[0]=true;
 				else result.write(val1);
 			}
 			//Aquí
 			if (isData_2) {
-				if (val2 == EOT)end_2=true;
+				if (val2 == EOT) end[1]=true;
 				else result.write(val2);
 			}
-			if (isData_3) {
-				if (val3 == EOT) end_3=true;
-				else result.write(val3);
-			}
-			if (isData_4) {
-				if (val4 == EOT) end_4=true;
-				else result.write(val4);
-			}
-		} while ((!end_1) || (!end_2) || (!end_3) || (!end_4));
+
+		} while ((!end[0]) || (!end[1]));
 
 		result.write(EOT);
 }

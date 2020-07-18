@@ -60,15 +60,16 @@ int main (int argc, char *argv[]) {
 
 	prueba = TREE_SIZE-1;
 
-	top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+	//top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+	top_function(tree,prueba,rel,buscarPadre,salida_hw);
 	printResult(salida_hw,true,prueba);
 	std::cout << "---- Finalized test for worst case ---- " << std::endl;
 	std::cout <<" " << std::endl;
 
 
 	std::cout << "---- Testing nº of access for best case (i = 1) ---- " << std::endl;
-	prueba = 1;
-	top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+	prueba = 2;
+	top_function(tree,prueba,rel,buscarPadre,salida_hw);
 	printResult(salida_hw,true,prueba);
 	std::cout << "---- Finalized test for best case ---- " << std::endl;
 	std::cout <<" " << std::endl;
@@ -76,7 +77,7 @@ int main (int argc, char *argv[]) {
 
 	std::cout << "---- Testing nº of access for promedium case (i = N/2)" << std::endl;
 	prueba = TREE_SIZE/2;
-	top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+	top_function(tree,prueba,rel,buscarPadre,salida_hw);
 	printResult(salida_hw,true,prueba);
 
 	std::cout << "---- Finalized test for promedium case ---- " << std::endl;
@@ -88,7 +89,7 @@ int main (int argc, char *argv[]) {
 
 		prueba = TREE_SIZE-1;
 
-		top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+		top_function(tree,prueba,rel,buscarPadre,salida_hw);
 		printResult(salida_hw,false,prueba);
 		std::cout << "---- Finalized test for worst case ---- " << std::endl;
 		std::cout <<" " << std::endl;
@@ -96,7 +97,7 @@ int main (int argc, char *argv[]) {
 
 		std::cout << "---- Testing nº of access for best case (i = 1) ---- " << std::endl;
 		prueba = 1;
-		top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+		top_function(tree,prueba,rel,buscarPadre,salida_hw);
 		printResult(salida_hw,false,prueba);
 		std::cout << "---- Finalized test for best case ---- " << std::endl;
 		std::cout <<" " << std::endl;
@@ -104,7 +105,7 @@ int main (int argc, char *argv[]) {
 
 		std::cout << "---- Testing nº of access for promedium case (i = N/2)" << std::endl;
 		prueba = TREE_SIZE/2;
-		top_function(tree,&tree[TREE_SIZE/2],prueba,rel,buscarPadre,salida_hw);
+		top_function(tree,prueba,rel,buscarPadre,salida_hw);
 		printResult(salida_hw,false,prueba);
 	std::cout <<" " << std::endl;
 
