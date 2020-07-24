@@ -1,0 +1,34 @@
+#-----------------------------------------------------------
+# xsim v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Fri Jul 24 19:20:46 2020
+# Process ID: 54824
+# Current directory: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog
+# Command line: xsim.exe -mode tcl -source {xsim.dir/top_function/xsim_script.tcl}
+# Log file: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog/xsim.log
+# Journal file: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/top_function/xsim_script.tcl
+# xsim {top_function} -autoloadwcfg -tclbatch {top_function.tcl}
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+source top_function.tcl
+## run all
+////////////////////////////////////////////////////////////////////////////////////
+// Inter-Transaction Progress: Completed Transaction / Total Transaction
+// Intra-Transaction Progress: Measured Latency / Latency Estimation * 100%
+//
+// RTL Simulation : "Inter-Transaction Progress" ["Intra-Transaction Progress"] @ "Simulation Time"
+////////////////////////////////////////////////////////////////////////////////////
+// RTL Simulation : 0 / 6 [0.00%] @ "125000"
+// RTL Simulation : 1 / 6 [100.00%] @ "165000"
+// RTL Simulation : 2 / 6 [100.00%] @ "195000"
+// RTL Simulation : 3 / 6 [100.00%] @ "225000"
+// RTL Simulation : 4 / 6 [100.00%] @ "255000"
+// RTL Simulation : 5 / 6 [100.00%] @ "285000"
+// RTL Simulation : 6 / 6 [100.00%] @ "315000"
+////////////////////////////////////////////////////////////////////////////////////
+$finish called at time : 355 ns : File "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog/top_function.autotb.v" Line 461
+## quit
+INFO: [Common 17-206] Exiting xsim at Fri Jul 24 19:21:04 2020...

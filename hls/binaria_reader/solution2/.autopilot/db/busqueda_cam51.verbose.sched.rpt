@@ -1,0 +1,225 @@
+
+
+================================================================
+== Vivado HLS Report for 'busqueda_cam51'
+================================================================
+* Date:           Mon Jul 20 13:08:26 2020
+
+* Version:        2019.1 (Build 2552052 on Fri May 24 15:28:33 MDT 2019)
+* Project:        binarycam
+* Solution:       solution2
+* Product family: zynq
+* Target device:  xc7z020-clg484-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |  10.00|     8.448|        1.25|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+-----+-----+-----+---------+
+    |  Latency  |  Interval | Pipeline|
+    | min | max | min | max |   Type  |
+    +-----+-----+-----+-----+---------+
+    |    ?|    ?|    ?|    ?|   none  |
+    +-----+-----+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +----------+-----+-----+----------+-----------+-----------+------+----------+
+        |          |  Latency  | Iteration|  Initiation Interval  | Trip |          |
+        | Loop Name| min | max |  Latency |  achieved |   target  | Count| Pipelined|
+        +----------+-----+-----+----------+-----------+-----------+------+----------+
+        |- Loop 1  |    ?|    ?|         2|          1|          1|     ?|    yes   |
+        |- Loop 2  |    ?|    ?|         2|          1|          1|     ?|    yes   |
+        +----------+-----+-----+----------+-----------+-----------+------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 2
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 1, depth = 2
+  * Pipeline-1: initiation interval (II) = 1, depth = 2
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 6
+* Pipeline : 2
+  Pipeline-0 : II = 1, D = 2, States = { 2 3 }
+  Pipeline-1 : II = 1, D = 2, States = { 5 6 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 5 
+2 --> 3 
+3 --> 4 2 
+4 --> 
+5 --> 6 
+6 --> 4 5 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 3.63>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecInterface(i24* @in1_V_V, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str, [1 x i8]* @p_str, [1 x i8]* @p_str, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str, [1 x i8]* @p_str)"   --->   Operation 7 'specinterface' 'empty' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%empty_65 = call i32 (...)* @_ssdm_op_SpecInterface(i11* @in1b_V_V, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str, [1 x i8]* @p_str, [1 x i8]* @p_str, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str, [1 x i8]* @p_str)"   --->   Operation 8 'specinterface' 'empty_65' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%empty_66 = call i32 (...)* @_ssdm_op_SpecInterface(i1* %fatherSearch, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str, [1 x i8]* @p_str, [1 x i8]* @p_str, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str, [11 x i8]* @ScalarProp_str)"   --->   Operation 9 'specinterface' 'empty_66' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%empty_67 = call i32 (...)* @_ssdm_op_SpecInterface(i2* %relationship_V, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str, [1 x i8]* @p_str, [1 x i8]* @p_str, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str, [11 x i8]* @ScalarProp_str)"   --->   Operation 10 'specinterface' 'empty_67' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%empty_68 = call i32 (...)* @_ssdm_op_SpecInterface(i11* %nodo_V, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str, [1 x i8]* @p_str, [1 x i8]* @p_str, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str, [11 x i8]* @ScalarProp_str)"   --->   Operation 11 'specinterface' 'empty_68' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (3.63ns)   --->   "%nodo_V_read = call i11 @_ssdm_op_Read.ap_fifo.i11P(i11* %nodo_V)" [binarycam/cam.cpp:61]   --->   Operation 12 'read' 'nodo_V_read' <Predicate = true> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_1 : Operation 13 [1/1] (3.63ns)   --->   "%relationship_V_read = call i2 @_ssdm_op_Read.ap_fifo.i2P(i2* %relationship_V)" [binarycam/cam.cpp:61]   --->   Operation 13 'read' 'relationship_V_read' <Predicate = true> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_1 : Operation 14 [1/1] (3.63ns)   --->   "%fatherSearch_read = call i1 @_ssdm_op_Read.ap_fifo.i1P(i1* %fatherSearch)" [binarycam/cam.cpp:46]   --->   Operation 14 'read' 'fatherSearch_read' <Predicate = true> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_1 : Operation 15 [1/1] (0.00ns)   --->   "%empty_69 = call i32 (...)* @_ssdm_op_SpecInterface(i24* @in1_V_V, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str, [1 x i8]* @p_str, [1 x i8]* @p_str, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str, [1 x i8]* @p_str)"   --->   Operation 15 'specinterface' 'empty_69' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 16 [1/1] (0.00ns)   --->   "%empty_70 = call i32 (...)* @_ssdm_op_SpecInterface(i11* @in1b_V_V, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str, [1 x i8]* @p_str, [1 x i8]* @p_str, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str, [1 x i8]* @p_str)"   --->   Operation 16 'specinterface' 'empty_70' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "br i1 %fatherSearch_read, label %hls_label_1_begin.preheader, label %hls_label_2_begin.preheader" [binarycam/cam.cpp:52->binarycam/cam.cpp:22]   --->   Operation 17 'br' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "br label %hls_label_2_begin" [binarycam/cam.cpp:69->binarycam/cam.cpp:22]   --->   Operation 18 'br' <Predicate = (!fatherSearch_read)> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "br label %hls_label_1_begin" [binarycam/cam.cpp:53->binarycam/cam.cpp:22]   --->   Operation 19 'br' <Predicate = (fatherSearch_read)> <Delay = 0.00>
+
+State 2 <SV = 1> <Delay = 8.44>
+ST_2 : Operation 20 [1/1] (3.63ns)   --->   "%in1_V_V_read_1 = call { i1, i24 } @_ssdm_op_NbRead.ap_fifo.volatile.i24P(i24* @in1_V_V)" [binarycam/cam.cpp:71->binarycam/cam.cpp:22]   --->   Operation 20 'nbread' 'in1_V_V_read_1' <Predicate = true> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_2 : Operation 21 [1/1] (0.00ns)   --->   "%empty_n_2 = extractvalue { i1, i24 } %in1_V_V_read_1, 0" [binarycam/cam.cpp:71->binarycam/cam.cpp:22]   --->   Operation 21 'extractvalue' 'empty_n_2' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 22 [1/1] (0.00ns)   --->   "%tmp_V_5 = extractvalue { i1, i24 } %in1_V_V_read_1, 1" [binarycam/cam.cpp:71->binarycam/cam.cpp:22]   --->   Operation 22 'extractvalue' 'tmp_V_5' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 23 [1/1] (0.00ns)   --->   "br i1 %empty_n_2, label %3, label %hls_label_2_end" [binarycam/cam.cpp:72->binarycam/cam.cpp:22]   --->   Operation 23 'br' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 24 [1/1] (2.45ns)   --->   "%icmp_ln879_2 = icmp eq i24 %tmp_V_5, 1025" [binarycam/cam.cpp:73->binarycam/cam.cpp:22]   --->   Operation 24 'icmp' 'icmp_ln879_2' <Predicate = (empty_n_2)> <Delay = 2.45> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 25 [1/1] (0.00ns)   --->   "br i1 %icmp_ln879_2, label %hls_label_2_end2, label %4" [binarycam/cam.cpp:73->binarycam/cam.cpp:22]   --->   Operation 25 'br' <Predicate = (empty_n_2)> <Delay = 0.00>
+ST_2 : Operation 26 [1/1] (0.00ns)   --->   "%node_relation_V_1 = trunc i24 %tmp_V_5 to i2" [binarycam/cam.cpp:75->binarycam/cam.cpp:22]   --->   Operation 26 'trunc' 'node_relation_V_1' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 0.00>
+ST_2 : Operation 27 [1/1] (0.00ns)   --->   "%compare_node_V_1 = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %tmp_V_5, i32 13, i32 23)" [binarycam/cam.cpp:76->binarycam/cam.cpp:22]   --->   Operation 27 'partselect' 'compare_node_V_1' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 0.00>
+ST_2 : Operation 28 [1/1] (1.88ns)   --->   "%icmp_ln879_5 = icmp eq i11 %compare_node_V_1, %nodo_V_read" [binarycam/cam.cpp:77->binarycam/cam.cpp:22]   --->   Operation 28 'icmp' 'icmp_ln879_5' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 1.88> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 29 [1/1] (0.95ns)   --->   "%icmp_ln879_6 = icmp eq i2 %node_relation_V_1, %relationship_V_read" [binarycam/cam.cpp:77->binarycam/cam.cpp:22]   --->   Operation 29 'icmp' 'icmp_ln879_6' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 0.95> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 30 [1/1] (0.97ns)   --->   "%and_ln77 = and i1 %icmp_ln879_5, %icmp_ln879_6" [binarycam/cam.cpp:77->binarycam/cam.cpp:22]   --->   Operation 30 'and' 'and_ln77' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 31 [1/1] (0.00ns)   --->   "br i1 %and_ln77, label %5, label %hls_label_2_end1" [binarycam/cam.cpp:77->binarycam/cam.cpp:22]   --->   Operation 31 'br' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 0.00>
+ST_2 : Operation 32 [1/1] (0.00ns)   --->   "%tmp_V_3 = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %tmp_V_5, i32 2, i32 12)" [binarycam/cam.cpp:77->binarycam/cam.cpp:22]   --->   Operation 32 'partselect' 'tmp_V_3' <Predicate = (empty_n_2 & !icmp_ln879_2 & and_ln77)> <Delay = 0.00>
+
+State 3 <SV = 2> <Delay = 3.63>
+ST_3 : Operation 33 [1/1] (0.00ns)   --->   "%tmp_1_i_i = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str5)" [binarycam/cam.cpp:69->binarycam/cam.cpp:22]   --->   Operation 33 'specregionbegin' 'tmp_1_i_i' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 34 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecPipeline(i32 -1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1) nounwind" [binarycam/cam.cpp:70->binarycam/cam.cpp:22]   --->   Operation 34 'specpipeline' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 35 [1/1] (0.00ns)   --->   "%empty_74 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str5, i32 %tmp_1_i_i)" [binarycam/cam.cpp:81->binarycam/cam.cpp:22]   --->   Operation 35 'specregionend' 'empty_74' <Predicate = (!empty_n_2)> <Delay = 0.00>
+ST_3 : Operation 36 [1/1] (0.00ns)   --->   "br label %.backedge.i.i"   --->   Operation 36 'br' <Predicate = (!empty_n_2)> <Delay = 0.00>
+ST_3 : Operation 37 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* @in1b_V_V, i11 %tmp_V_3)" [binarycam/cam.cpp:77->binarycam/cam.cpp:22]   --->   Operation 37 'write' <Predicate = (empty_n_2 & !icmp_ln879_2 & and_ln77)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_3 : Operation 38 [1/1] (0.00ns)   --->   "br label %hls_label_2_end1" [binarycam/cam.cpp:77->binarycam/cam.cpp:22]   --->   Operation 38 'br' <Predicate = (empty_n_2 & !icmp_ln879_2 & and_ln77)> <Delay = 0.00>
+ST_3 : Operation 39 [1/1] (0.00ns)   --->   "%empty_75 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str5, i32 %tmp_1_i_i)" [binarycam/cam.cpp:81->binarycam/cam.cpp:22]   --->   Operation 39 'specregionend' 'empty_75' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 0.00>
+ST_3 : Operation 40 [1/1] (0.00ns)   --->   "br label %.backedge.i.i"   --->   Operation 40 'br' <Predicate = (empty_n_2 & !icmp_ln879_2)> <Delay = 0.00>
+ST_3 : Operation 41 [1/1] (0.00ns)   --->   "br label %hls_label_2_begin"   --->   Operation 41 'br' <Predicate = (!icmp_ln879_2) | (!empty_n_2)> <Delay = 0.00>
+
+State 4 <SV = 2> <Delay = 3.63>
+ST_4 : Operation 42 [1/1] (0.00ns)   --->   "%empty_76 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str5, i32 %tmp_1_i_i)" [binarycam/cam.cpp:81->binarycam/cam.cpp:22]   --->   Operation 42 'specregionend' 'empty_76' <Predicate = (!fatherSearch_read)> <Delay = 0.00>
+ST_4 : Operation 43 [1/1] (0.00ns)   --->   "br label %.exit"   --->   Operation 43 'br' <Predicate = (!fatherSearch_read)> <Delay = 0.00>
+ST_4 : Operation 44 [1/1] (0.00ns)   --->   "%empty_73 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str4, i32 %tmp_i_i)" [binarycam/cam.cpp:67->binarycam/cam.cpp:22]   --->   Operation 44 'specregionend' 'empty_73' <Predicate = (fatherSearch_read)> <Delay = 0.00>
+ST_4 : Operation 45 [1/1] (0.00ns)   --->   "br label %.exit"   --->   Operation 45 'br' <Predicate = (fatherSearch_read)> <Delay = 0.00>
+ST_4 : Operation 46 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* @in1b_V_V, i11 -1023)" [binarycam/cam.cpp:83->binarycam/cam.cpp:22]   --->   Operation 46 'write' <Predicate = true> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_4 : Operation 47 [1/1] (0.00ns)   --->   "ret void" [binarycam/cam.cpp:22]   --->   Operation 47 'ret' <Predicate = true> <Delay = 0.00>
+
+State 5 <SV = 1> <Delay = 8.44>
+ST_5 : Operation 48 [1/1] (3.63ns)   --->   "%in1_V_V_read = call { i1, i24 } @_ssdm_op_NbRead.ap_fifo.volatile.i24P(i24* @in1_V_V)" [binarycam/cam.cpp:55->binarycam/cam.cpp:22]   --->   Operation 48 'nbread' 'in1_V_V_read' <Predicate = true> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_5 : Operation 49 [1/1] (0.00ns)   --->   "%empty_n = extractvalue { i1, i24 } %in1_V_V_read, 0" [binarycam/cam.cpp:55->binarycam/cam.cpp:22]   --->   Operation 49 'extractvalue' 'empty_n' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 50 [1/1] (0.00ns)   --->   "%tmp_V_4 = extractvalue { i1, i24 } %in1_V_V_read, 1" [binarycam/cam.cpp:55->binarycam/cam.cpp:22]   --->   Operation 50 'extractvalue' 'tmp_V_4' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 51 [1/1] (0.00ns)   --->   "br i1 %empty_n, label %0, label %hls_label_1_end" [binarycam/cam.cpp:56->binarycam/cam.cpp:22]   --->   Operation 51 'br' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 52 [1/1] (2.45ns)   --->   "%icmp_ln879 = icmp eq i24 %tmp_V_4, 1025" [binarycam/cam.cpp:57->binarycam/cam.cpp:22]   --->   Operation 52 'icmp' 'icmp_ln879' <Predicate = (empty_n)> <Delay = 2.45> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 53 [1/1] (0.00ns)   --->   "br i1 %icmp_ln879, label %hls_label_1_end2, label %1" [binarycam/cam.cpp:57->binarycam/cam.cpp:22]   --->   Operation 53 'br' <Predicate = (empty_n)> <Delay = 0.00>
+ST_5 : Operation 54 [1/1] (0.00ns)   --->   "%node_relation_V = trunc i24 %tmp_V_4 to i2" [binarycam/cam.cpp:59->binarycam/cam.cpp:22]   --->   Operation 54 'trunc' 'node_relation_V' <Predicate = (empty_n & !icmp_ln879)> <Delay = 0.00>
+ST_5 : Operation 55 [1/1] (0.00ns)   --->   "%compare_node_V = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %tmp_V_4, i32 2, i32 12)" [binarycam/cam.cpp:60->binarycam/cam.cpp:22]   --->   Operation 55 'partselect' 'compare_node_V' <Predicate = (empty_n & !icmp_ln879)> <Delay = 0.00>
+ST_5 : Operation 56 [1/1] (1.88ns)   --->   "%icmp_ln879_3 = icmp eq i11 %compare_node_V, %nodo_V_read" [binarycam/cam.cpp:61->binarycam/cam.cpp:22]   --->   Operation 56 'icmp' 'icmp_ln879_3' <Predicate = (empty_n & !icmp_ln879)> <Delay = 1.88> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 57 [1/1] (0.95ns)   --->   "%icmp_ln879_4 = icmp eq i2 %node_relation_V, %relationship_V_read" [binarycam/cam.cpp:61->binarycam/cam.cpp:22]   --->   Operation 57 'icmp' 'icmp_ln879_4' <Predicate = (empty_n & !icmp_ln879)> <Delay = 0.95> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 58 [1/1] (0.97ns)   --->   "%and_ln61 = and i1 %icmp_ln879_3, %icmp_ln879_4" [binarycam/cam.cpp:61->binarycam/cam.cpp:22]   --->   Operation 58 'and' 'and_ln61' <Predicate = (empty_n & !icmp_ln879)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 59 [1/1] (0.00ns)   --->   "br i1 %and_ln61, label %2, label %hls_label_1_end1" [binarycam/cam.cpp:61->binarycam/cam.cpp:22]   --->   Operation 59 'br' <Predicate = (empty_n & !icmp_ln879)> <Delay = 0.00>
+ST_5 : Operation 60 [1/1] (0.00ns)   --->   "%tmp_V = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %tmp_V_4, i32 13, i32 23)" [binarycam/cam.cpp:62->binarycam/cam.cpp:22]   --->   Operation 60 'partselect' 'tmp_V' <Predicate = (empty_n & !icmp_ln879 & and_ln61)> <Delay = 0.00>
+
+State 6 <SV = 2> <Delay = 3.63>
+ST_6 : Operation 61 [1/1] (0.00ns)   --->   "%tmp_i_i = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str4)" [binarycam/cam.cpp:53->binarycam/cam.cpp:22]   --->   Operation 61 'specregionbegin' 'tmp_i_i' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 62 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecPipeline(i32 -1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1) nounwind" [binarycam/cam.cpp:54->binarycam/cam.cpp:22]   --->   Operation 62 'specpipeline' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 63 [1/1] (0.00ns)   --->   "%empty_71 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str4, i32 %tmp_i_i)" [binarycam/cam.cpp:67->binarycam/cam.cpp:22]   --->   Operation 63 'specregionend' 'empty_71' <Predicate = (!empty_n)> <Delay = 0.00>
+ST_6 : Operation 64 [1/1] (0.00ns)   --->   "br label %.backedge274.i.i"   --->   Operation 64 'br' <Predicate = (!empty_n)> <Delay = 0.00>
+ST_6 : Operation 65 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* @in1b_V_V, i11 %tmp_V)" [binarycam/cam.cpp:62->binarycam/cam.cpp:22]   --->   Operation 65 'write' <Predicate = (empty_n & !icmp_ln879 & and_ln61)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 2> <FIFO>
+ST_6 : Operation 66 [1/1] (0.00ns)   --->   "br label %hls_label_1_end1" [binarycam/cam.cpp:64->binarycam/cam.cpp:22]   --->   Operation 66 'br' <Predicate = (empty_n & !icmp_ln879 & and_ln61)> <Delay = 0.00>
+ST_6 : Operation 67 [1/1] (0.00ns)   --->   "%empty_72 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str4, i32 %tmp_i_i)" [binarycam/cam.cpp:67->binarycam/cam.cpp:22]   --->   Operation 67 'specregionend' 'empty_72' <Predicate = (empty_n & !icmp_ln879)> <Delay = 0.00>
+ST_6 : Operation 68 [1/1] (0.00ns)   --->   "br label %.backedge274.i.i"   --->   Operation 68 'br' <Predicate = (empty_n & !icmp_ln879)> <Delay = 0.00>
+ST_6 : Operation 69 [1/1] (0.00ns)   --->   "br label %hls_label_1_begin"   --->   Operation 69 'br' <Predicate = (!icmp_ln879) | (!empty_n)> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10ns, clock uncertainty: 1.25ns.
+
+ <State 1>: 3.63ns
+The critical path consists of the following:
+	fifo read on port 'nodo_V' (binarycam/cam.cpp:61) [11]  (3.63 ns)
+
+ <State 2>: 8.45ns
+The critical path consists of the following:
+	fifo read on port 'in1_V_V' (binarycam/cam.cpp:71->binarycam/cam.cpp:22) [22]  (3.63 ns)
+	'icmp' operation ('icmp_ln879_5', binarycam/cam.cpp:77->binarycam/cam.cpp:22) [35]  (1.88 ns)
+	'and' operation ('and_ln77', binarycam/cam.cpp:77->binarycam/cam.cpp:22) [37]  (0.978 ns)
+	blocking operation 1.96 ns on control path)
+
+ <State 3>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'in1b_V_V' (binarycam/cam.cpp:77->binarycam/cam.cpp:22) [41]  (3.63 ns)
+
+ <State 4>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'in1b_V_V' (binarycam/cam.cpp:83->binarycam/cam.cpp:22) [86]  (3.63 ns)
+
+ <State 5>: 8.45ns
+The critical path consists of the following:
+	fifo read on port 'in1_V_V' (binarycam/cam.cpp:55->binarycam/cam.cpp:22) [56]  (3.63 ns)
+	'icmp' operation ('icmp_ln879_3', binarycam/cam.cpp:61->binarycam/cam.cpp:22) [69]  (1.88 ns)
+	'and' operation ('and_ln61', binarycam/cam.cpp:61->binarycam/cam.cpp:22) [71]  (0.978 ns)
+	blocking operation 1.96 ns on control path)
+
+ <State 6>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'in1b_V_V' (binarycam/cam.cpp:62->binarycam/cam.cpp:22) [75]  (3.63 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

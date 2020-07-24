@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# xsim v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Fri Jul 24 11:50:27 2020
+# Process ID: 36072
+# Current directory: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/duaL_one_memory_with_mux/sim/verilog
+# Command line: xsim.exe -mode tcl -source {xsim.dir/top_function/xsim_script.tcl}
+# Log file: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/duaL_one_memory_with_mux/sim/verilog/xsim.log
+# Journal file: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/duaL_one_memory_with_mux/sim/verilog\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/top_function/xsim_script.tcl
+source top_function.tcl

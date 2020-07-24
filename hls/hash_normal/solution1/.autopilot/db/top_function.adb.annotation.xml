@@ -1,0 +1,19 @@
+<annotationInfo>
+<annotationInfo>
+<item  id="14" filename="cam_hash/cam.cpp" linenumber="56" name="p_Result_s" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="result_V_V_din" latency="0" BRAM="-1" DSP="-1" FF="-1" LUT="-1" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="15" filename="cam_hash/cam.cpp" linenumber="57" name="trunc_ln647_1" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="trunc_ln647_1_fu_114_p1" latency="0" BRAM="-1" DSP="-1" FF="-1" LUT="-1" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="16" filename="cam_hash/cam.cpp" linenumber="58" name="icmp_ln879_2" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="icmp_ln879_2_fu_118_p2" latency="0" BRAM="-1" DSP="-1" FF="0" LUT="13" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="17" filename="cam_hash/cam.cpp" linenumber="58" name="icmp_ln879_3" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="icmp_ln879_3_fu_124_p2" latency="0" BRAM="-1" DSP="-1" FF="0" LUT="8" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="18" filename="cam_hash/cam.cpp" linenumber="58" name="and_ln58" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="and_ln58_fu_130_p2" latency="0" BRAM="-1" DSP="-1" FF="0" LUT="2" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="21" filename="cam_hash/cam.cpp" linenumber="59" name="tmp_V_1" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="result_V_V_din" latency="0" BRAM="-1" DSP="-1" FF="-1" LUT="-1" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="27" filename="cam_hash/cam.cpp" linenumber="65" name="p_Result_7" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="p_Result_7_fu_104_p4" latency="0" BRAM="-1" DSP="-1" FF="-1" LUT="-1" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="28" filename="cam_hash/cam.cpp" linenumber="66" name="trunc_ln647" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="trunc_ln647_fu_136_p1" latency="0" BRAM="-1" DSP="-1" FF="-1" LUT="-1" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="29" filename="cam_hash/cam.cpp" linenumber="67" name="icmp_ln879" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="icmp_ln879_fu_140_p2" latency="0" BRAM="-1" DSP="-1" FF="0" LUT="13" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="30" filename="cam_hash/cam.cpp" linenumber="67" name="icmp_ln879_1" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="icmp_ln879_1_fu_146_p2" latency="0" BRAM="-1" DSP="-1" FF="0" LUT="8" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="31" filename="cam_hash/cam.cpp" linenumber="67" name="and_ln67" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="and_ln67_fu_152_p2" latency="0" BRAM="-1" DSP="-1" FF="0" LUT="2" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+<item  id="34" filename="cam_hash/cam.cpp" linenumber="68" name="tmp_V" contextFuncName="busqueda_cam" moduleName="busqueda_cam" rtlName="result_V_V_din" latency="0" BRAM="-1" DSP="-1" FF="-1" LUT="-1" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"&gt;&lt;\/item&gt;
+&lt;\/annotationInfo&gt;
+<annotationInfo>
+<item  id="17" filename="cam_hash/cam.cpp" linenumber="47" name="_ln47" contextFuncName="top_function" moduleName="top_function" rtlName="busqueda_cam_U0" latency="1" BRAM="-1" DSP="-1" FF="-1" LUT="-1" fileDirectory="C:\Users\manug\AppData\Roaming\Xilinx\Vivado"><\/item>
+<\/annotationInfo>
+</annotationInfo>

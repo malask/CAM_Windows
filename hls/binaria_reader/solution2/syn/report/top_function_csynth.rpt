@@ -1,0 +1,189 @@
+
+
+================================================================
+== Vivado HLS Report for 'top_function'
+================================================================
+* Date:           Mon Jul 20 13:08:29 2020
+
+* Version:        2019.1 (Build 2552052 on Fri May 24 15:28:33 MDT 2019)
+* Project:        binarycam
+* Solution:       solution2
+* Product family: zynq
+* Target device:  xc7z020-clg484-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |  10.00|     8.448|        1.25|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+-----+-----+-----+----------+
+    |  Latency  |  Interval | Pipeline |
+    | min | max | min | max |   Type   |
+    +-----+-----+-----+-----+----------+
+    |    ?|    ?|    ?|    ?| dataflow |
+    +-----+-----+-----+-----+----------+
+
+    + Detail: 
+        * Instance: 
+        +------------------------+---------------------+-----+-----+-----+-----+---------+
+        |                        |                     |  Latency  |  Interval | Pipeline|
+        |        Instance        |        Module       | min | max | min | max |   Type  |
+        +------------------------+---------------------+-----+-----+-----+-----+---------+
+        |busqueda_cam51_U0       |busqueda_cam51       |    ?|    ?|    ?|    ?|   none  |
+        |busqueda_cam_U0         |busqueda_cam         |    ?|    ?|    ?|    ?|   none  |
+        |preprocessor_cam52_U0   |preprocessor_cam52   |    1|  514|    1|  514|   none  |
+        |combinar_U0             |combinar             |    ?|    ?|    ?|    ?|   none  |
+        |top_function_entry3_U0  |top_function_entry3  |    0|    0|    0|    0|   none  |
+        +------------------------+---------------------+-----+-----+-----+-----+---------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-------+--------+-------+-----+
+|       Name      | BRAM_18K| DSP48E|   FF   |  LUT  | URAM|
++-----------------+---------+-------+--------+-------+-----+
+|DSP              |        -|      -|       -|      -|    -|
+|Expression       |        -|      -|       0|     34|    -|
+|FIFO             |        0|      -|      69|    291|    -|
+|Instance         |        -|      -|     158|    806|    -|
+|Memory           |        -|      -|       -|      -|    -|
+|Multiplexer      |        -|      -|       -|     36|    -|
+|Register         |        -|      -|       6|      -|    -|
++-----------------+---------+-------+--------+-------+-----+
+|Total            |        0|      0|     233|   1167|    0|
++-----------------+---------+-------+--------+-------+-----+
+|Available        |      280|    220|  106400|  53200|    0|
++-----------------+---------+-------+--------+-------+-----+
+|Utilization (%)  |        0|      0|   ~0   |      2|    0|
++-----------------+---------+-------+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +------------------------+---------------------+---------+-------+----+-----+-----+
+    |        Instance        |        Module       | BRAM_18K| DSP48E| FF | LUT | URAM|
+    +------------------------+---------------------+---------+-------+----+-----+-----+
+    |busqueda_cam_U0         |busqueda_cam         |        0|      0|  50|  197|    0|
+    |busqueda_cam51_U0       |busqueda_cam51       |        0|      0|  51|  206|    0|
+    |combinar_U0             |combinar             |        0|      0|  35|  123|    0|
+    |preprocessor_cam52_U0   |preprocessor_cam52   |        0|      0|  20|  242|    0|
+    |top_function_entry3_U0  |top_function_entry3  |        0|      0|   2|   38|    0|
+    +------------------------+---------------------+---------+-------+----+-----+-----+
+    |Total                   |                     |        0|      0| 158|  806|    0|
+    +------------------------+---------------------+---------+-------+----+-----+-----+
+
+    * DSP48E: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    +----------------------+---------+---+----+-----+------+-----+---------+
+    |         Name         | BRAM_18K| FF| LUT| URAM| Depth| Bits| Size:D*B|
+    +----------------------+---------+---+----+-----+------+-----+---------+
+    |fatherSearch_c10_U    |        0|  5|   0|    -|     2|    1|        2|
+    |fatherSearch_c3_U     |        0|  5|   0|    -|     2|    1|        2|
+    |fatherSearch_c_U      |        0|  5|   0|    -|     2|    1|        2|
+    |in1_V_V_U             |        0|  6|   0|    -|     8|   24|      192|
+    |in1b_V_V_U            |        0|  6|   0|    -|     8|   11|       88|
+    |in2_V_V_U             |        0|  6|   0|    -|     8|   24|      192|
+    |in2b_V_V_U            |        0|  6|   0|    -|     8|   11|       88|
+    |nodo_V_c1_U           |        0|  5|   0|    -|     2|   11|       22|
+    |nodo_V_c9_U           |        0|  5|   0|    -|     2|   11|       22|
+    |nodo_V_c_U            |        0|  5|   0|    -|     2|   11|       22|
+    |relationship_V_c11_U  |        0|  5|   0|    -|     2|    2|        4|
+    |relationship_V_c2_U   |        0|  5|   0|    -|     2|    2|        4|
+    |relationship_V_c_U    |        0|  5|   0|    -|     2|    2|        4|
+    +----------------------+---------+---+----+-----+------+-----+---------+
+    |Total                 |        0| 69|   0|    0|    50|  112|      644|
+    +----------------------+---------+---+----+-----+------+-----+---------+
+
+    * Expression: 
+    +-----------------------------------------+----------+-------+---+----+------------+------------+
+    |              Variable Name              | Operation| DSP48E| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +-----------------------------------------+----------+-------+---+----+------------+------------+
+    |preprocessor_cam52_U0_ap_ready_count     |     +    |      0|  0|  10|           2|           1|
+    |top_function_entry3_U0_ap_ready_count    |     +    |      0|  0|  10|           2|           1|
+    |ap_idle                                  |    and   |      0|  0|   2|           1|           1|
+    |ap_sync_ready                            |    and   |      0|  0|   2|           1|           1|
+    |preprocessor_cam52_U0_ap_start           |    and   |      0|  0|   2|           1|           1|
+    |preprocessor_cam52_U0_start_full_n       |    and   |      0|  0|   2|           1|           1|
+    |top_function_entry3_U0_ap_start          |    and   |      0|  0|   2|           1|           1|
+    |ap_sync_preprocessor_cam52_U0_ap_ready   |    or    |      0|  0|   2|           1|           1|
+    |ap_sync_top_function_entry3_U0_ap_ready  |    or    |      0|  0|   2|           1|           1|
+    +-----------------------------------------+----------+-------+---+----+------------+------------+
+    |Total                                    |          |      0|  0|  34|          11|           9|
+    +-----------------------------------------+----------+-------+---+----+------------+------------+
+
+    * Multiplexer: 
+    +---------------------------------------------+----+-----------+-----+-----------+
+    |                     Name                    | LUT| Input Size| Bits| Total Bits|
+    +---------------------------------------------+----+-----------+-----+-----------+
+    |ap_sync_reg_preprocessor_cam52_U0_ap_ready   |   9|          2|    1|          2|
+    |ap_sync_reg_top_function_entry3_U0_ap_ready  |   9|          2|    1|          2|
+    |preprocessor_cam52_U0_ap_ready_count         |   9|          2|    2|          4|
+    |top_function_entry3_U0_ap_ready_count        |   9|          2|    2|          4|
+    +---------------------------------------------+----+-----------+-----+-----------+
+    |Total                                        |  36|          8|    6|         12|
+    +---------------------------------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +---------------------------------------------+---+----+-----+-----------+
+    |                     Name                    | FF| LUT| Bits| Const Bits|
+    +---------------------------------------------+---+----+-----+-----------+
+    |ap_sync_reg_preprocessor_cam52_U0_ap_ready   |  1|   0|    1|          0|
+    |ap_sync_reg_top_function_entry3_U0_ap_ready  |  1|   0|    1|          0|
+    |preprocessor_cam52_U0_ap_ready_count         |  2|   0|    2|          0|
+    |top_function_entry3_U0_ap_ready_count        |  2|   0|    2|          0|
+    +---------------------------------------------+---+----+-----+-----------+
+    |Total                                        |  6|   0|    6|          0|
+    +---------------------------------------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-------------------+-----+-----+------------+----------------+--------------+
+|     RTL Ports     | Dir | Bits|  Protocol  |  Source Object |    C Type    |
++-------------------+-----+-----+------------+----------------+--------------+
+|tree_V_address0    | out |   10|  ap_memory |     tree_V     |     array    |
+|tree_V_ce0         | out |    1|  ap_memory |     tree_V     |     array    |
+|tree_V_d0          | out |   24|  ap_memory |     tree_V     |     array    |
+|tree_V_q0          |  in |   24|  ap_memory |     tree_V     |     array    |
+|tree_V_we0         | out |    1|  ap_memory |     tree_V     |     array    |
+|tree_V_address1    | out |   10|  ap_memory |     tree_V     |     array    |
+|tree_V_ce1         | out |    1|  ap_memory |     tree_V     |     array    |
+|tree_V_d1          | out |   24|  ap_memory |     tree_V     |     array    |
+|tree_V_q1          |  in |   24|  ap_memory |     tree_V     |     array    |
+|tree_V_we1         | out |    1|  ap_memory |     tree_V     |     array    |
+|nodo_V             |  in |   11|   ap_none  |     nodo_V     |    scalar    |
+|relationship_V     |  in |    2|   ap_none  | relationship_V |    scalar    |
+|fatherSearch       |  in |    1|   ap_none  |  fatherSearch  |    scalar    |
+|result_V_V_din     | out |   11|   ap_fifo  |   result_V_V   |    pointer   |
+|result_V_V_full_n  |  in |    1|   ap_fifo  |   result_V_V   |    pointer   |
+|result_V_V_write   | out |    1|   ap_fifo  |   result_V_V   |    pointer   |
+|ap_clk             |  in |    1| ap_ctrl_hs |  top_function  | return value |
+|ap_rst             |  in |    1| ap_ctrl_hs |  top_function  | return value |
+|ap_start           |  in |    1| ap_ctrl_hs |  top_function  | return value |
+|ap_done            | out |    1| ap_ctrl_hs |  top_function  | return value |
+|ap_ready           | out |    1| ap_ctrl_hs |  top_function  | return value |
+|ap_idle            | out |    1| ap_ctrl_hs |  top_function  | return value |
++-------------------+-----+-----+------------+----------------+--------------+
+

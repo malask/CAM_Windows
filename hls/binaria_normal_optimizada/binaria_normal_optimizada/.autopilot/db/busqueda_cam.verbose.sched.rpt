@@ -1,0 +1,283 @@
+
+
+================================================================
+== Vivado HLS Report for 'busqueda_cam'
+================================================================
+* Date:           Fri Jul 24 18:41:38 2020
+
+* Version:        2019.1 (Build 2552052 on Fri May 24 15:28:33 MDT 2019)
+* Project:        cam_simple
+* Solution:       binaria_normal_optimizada
+* Product family: zynq
+* Target device:  xc7z020-clg484-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |  10.00|     7.090|        1.25|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+------+-----+------+---------+
+    |   Latency  |  Interval  | Pipeline|
+    | min |  max | min |  max |   Type  |
+    +-----+------+-----+------+---------+
+    |    1|  1027|    1|  1027|   none  |
+    +-----+------+-----+------+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +----------+------+------+----------+-----------+-----------+------+----------+
+        |          |   Latency   | Iteration|  Initiation Interval  | Trip |          |
+        | Loop Name|  min |  max |  Latency |  achieved |   target  | Count| Pipelined|
+        +----------+------+------+----------+-----------+-----------+------+----------+
+        |- Loop 1  |  1025|  1025|         4|          2|          1|   512|    yes   |
+        |- Loop 2  |  1025|  1025|         4|          2|          1|   512|    yes   |
+        +----------+------+------+----------+-----------+-----------+------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 2, depth = 4
+  * Pipeline-1: initiation interval (II) = 2, depth = 4
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 10
+* Pipeline : 2
+  Pipeline-0 : II = 2, D = 4, States = { 2 3 4 5 }
+  Pipeline-1 : II = 2, D = 4, States = { 7 8 9 10 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 7 6 
+2 --> 6 3 
+3 --> 4 
+4 --> 5 
+5 --> 2 
+6 --> 
+7 --> 6 8 
+8 --> 9 
+9 --> 10 
+10 --> 7 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 3.83>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecInterface(i11* %result_V_V, [8 x i8]* @ap_fifo_str, i32 0, i32 0, [1 x i8]* @p_str18, i32 0, i32 0, [1 x i8]* @p_str19, [1 x i8]* @p_str20, [1 x i8]* @p_str21, i32 2, i32 2, i32 16, i32 16, [1 x i8]* @p_str22, [1 x i8]* @p_str23)"   --->   Operation 11 'specinterface' 'empty' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%fatherSearch_read = call i1 @_ssdm_op_Read.ap_auto.i1(i1 %fatherSearch)"   --->   Operation 12 'read' 'fatherSearch_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%relationship_V_read = call i2 @_ssdm_op_Read.ap_auto.i2(i2 %relationship_V)"   --->   Operation 13 'read' 'relationship_V_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 14 [1/1] (0.00ns)   --->   "%nodo_V_read = call i11 @_ssdm_op_Read.ap_auto.i11(i11 %nodo_V)"   --->   Operation 14 'read' 'nodo_V_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 15 [1/1] (1.88ns)   --->   "%icmp_ln25 = icmp eq i11 %nodo_V_read, 1" [cam_simple/cam.cpp:25]   --->   Operation 15 'icmp' 'icmp_ln25' <Predicate = true> <Delay = 1.88> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 16 [1/1] (0.97ns)   --->   "%and_ln25 = and i1 %icmp_ln25, %fatherSearch_read" [cam_simple/cam.cpp:25]   --->   Operation 16 'and' 'and_ln25' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "br i1 %and_ln25, label %1, label %2" [cam_simple/cam.cpp:25]   --->   Operation 17 'br' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.95ns)   --->   "%icmp_ln36_1 = icmp ne i2 %relationship_V_read, 0" [cam_simple/cam.cpp:36]   --->   Operation 18 'icmp' 'icmp_ln36_1' <Predicate = (!and_ln25)> <Delay = 0.95> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "br i1 %fatherSearch_read, label %.preheader329.preheader, label %.preheader.preheader" [cam_simple/cam.cpp:29]   --->   Operation 19 'br' <Predicate = (!and_ln25)> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (1.76ns)   --->   "br label %.preheader" [cam_simple/cam.cpp:40]   --->   Operation 20 'br' <Predicate = (!and_ln25 & !fatherSearch_read)> <Delay = 1.76>
+ST_1 : Operation 21 [1/1] (1.76ns)   --->   "br label %.preheader329" [cam_simple/cam.cpp:30]   --->   Operation 21 'br' <Predicate = (!and_ln25 & fatherSearch_read)> <Delay = 1.76>
+ST_1 : Operation 22 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* %result_V_V, i11 0)" [cam_simple/cam.cpp:26]   --->   Operation 22 'write' <Predicate = (and_ln25)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 0> <FIFO>
+ST_1 : Operation 23 [1/1] (0.00ns)   --->   "br label %7" [cam_simple/cam.cpp:27]   --->   Operation 23 'br' <Predicate = (and_ln25)> <Delay = 0.00>
+
+State 2 <SV = 1> <Delay = 3.25>
+ST_2 : Operation 24 [1/1] (0.00ns)   --->   "%i1_0 = phi i11 [ %i_1, %hls_label_1_end ], [ 0, %.preheader.preheader ]"   --->   Operation 24 'phi' 'i1_0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 25 [1/1] (0.00ns)   --->   "%tmp_3 = call i1 @_ssdm_op_BitSelect.i1.i11.i32(i11 %i1_0, i32 10)" [cam_simple/cam.cpp:40]   --->   Operation 25 'bitselect' 'tmp_3' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 26 [1/1] (0.00ns)   --->   "%empty_7 = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 512, i64 512, i64 512)"   --->   Operation 26 'speclooptripcount' 'empty_7' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 27 [1/1] (0.00ns)   --->   "br i1 %tmp_3, label %.loopexit.loopexit, label %hls_label_1_begin" [cam_simple/cam.cpp:40]   --->   Operation 27 'br' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 28 [1/1] (0.00ns)   --->   "%trunc_ln40 = trunc i11 %i1_0 to i10" [cam_simple/cam.cpp:40]   --->   Operation 28 'trunc' 'trunc_ln40' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_2 : Operation 29 [1/1] (0.00ns)   --->   "%zext_ln42 = zext i11 %i1_0 to i64" [cam_simple/cam.cpp:42]   --->   Operation 29 'zext' 'zext_ln42' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_2 : Operation 30 [1/1] (0.00ns)   --->   "%tree_V_addr_2 = getelementptr [1024 x i24]* %tree_V, i64 0, i64 %zext_ln42" [cam_simple/cam.cpp:42]   --->   Operation 30 'getelementptr' 'tree_V_addr_2' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_2 : Operation 31 [2/2] (3.25ns)   --->   "%valor_V_1 = load i24* %tree_V_addr_2, align 4" [cam_simple/cam.cpp:42]   --->   Operation 31 'load' 'valor_V_1' <Predicate = (!tmp_3)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+ST_2 : Operation 32 [1/1] (0.00ns)   --->   "%or_ln43 = or i10 %trunc_ln40, 1" [cam_simple/cam.cpp:43]   --->   Operation 32 'or' 'or_ln43' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_2 : Operation 33 [1/1] (0.00ns)   --->   "%zext_ln43 = zext i10 %or_ln43 to i64" [cam_simple/cam.cpp:43]   --->   Operation 33 'zext' 'zext_ln43' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_2 : Operation 34 [1/1] (0.00ns)   --->   "%tree_V_addr_3 = getelementptr [1024 x i24]* %tree_V, i64 0, i64 %zext_ln43" [cam_simple/cam.cpp:43]   --->   Operation 34 'getelementptr' 'tree_V_addr_3' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_2 : Operation 35 [2/2] (3.25ns)   --->   "%valor2_V_1 = load i24* %tree_V_addr_3, align 4" [cam_simple/cam.cpp:43]   --->   Operation 35 'load' 'valor2_V_1' <Predicate = (!tmp_3)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+
+State 3 <SV = 2> <Delay = 7.09>
+ST_3 : Operation 36 [1/2] (3.25ns)   --->   "%valor_V_1 = load i24* %tree_V_addr_2, align 4" [cam_simple/cam.cpp:42]   --->   Operation 36 'load' 'valor_V_1' <Predicate = (!tmp_3)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+ST_3 : Operation 37 [1/2] (3.25ns)   --->   "%valor2_V_1 = load i24* %tree_V_addr_3, align 4" [cam_simple/cam.cpp:43]   --->   Operation 37 'load' 'valor2_V_1' <Predicate = (!tmp_3)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+ST_3 : Operation 38 [1/1] (0.00ns)   --->   "%compare_node_min_V_1 = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor_V_1, i32 13, i32 23)" [cam_simple/cam.cpp:44]   --->   Operation 38 'partselect' 'compare_node_min_V_1' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_3 : Operation 39 [1/1] (0.00ns)   --->   "%compare_node_max_V_1 = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor2_V_1, i32 13, i32 23)" [cam_simple/cam.cpp:45]   --->   Operation 39 'partselect' 'compare_node_max_V_1' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_3 : Operation 40 [1/1] (1.88ns)   --->   "%icmp_ln46 = icmp ne i11 %compare_node_min_V_1, %nodo_V_read" [cam_simple/cam.cpp:46]   --->   Operation 40 'icmp' 'icmp_ln46' <Predicate = (!tmp_3)> <Delay = 1.88> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 41 [1/1] (0.97ns)   --->   "%or_ln46 = or i1 %icmp_ln46, %icmp_ln36_1" [cam_simple/cam.cpp:46]   --->   Operation 41 'or' 'or_ln46' <Predicate = (!tmp_3)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 42 [1/1] (0.00ns)   --->   "br i1 %or_ln46, label %._crit_edge337, label %5" [cam_simple/cam.cpp:46]   --->   Operation 42 'br' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_3 : Operation 43 [1/1] (0.00ns)   --->   "%tmp_V_1 = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor_V_1, i32 2, i32 12)" [cam_simple/cam.cpp:46]   --->   Operation 43 'partselect' 'tmp_V_1' <Predicate = (!tmp_3 & !or_ln46)> <Delay = 0.00>
+ST_3 : Operation 44 [1/1] (1.88ns)   --->   "%icmp_ln47 = icmp ne i11 %compare_node_max_V_1, %nodo_V_read" [cam_simple/cam.cpp:47]   --->   Operation 44 'icmp' 'icmp_ln47' <Predicate = (!tmp_3)> <Delay = 1.88> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 45 [1/1] (0.97ns)   --->   "%or_ln47 = or i1 %icmp_ln47, %icmp_ln36_1" [cam_simple/cam.cpp:47]   --->   Operation 45 'or' 'or_ln47' <Predicate = (!tmp_3)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 46 [1/1] (0.00ns)   --->   "br i1 %or_ln47, label %hls_label_1_end, label %6" [cam_simple/cam.cpp:47]   --->   Operation 46 'br' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_3 : Operation 47 [1/1] (0.00ns)   --->   "%tmp_V_3 = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor2_V_1, i32 2, i32 12)" [cam_simple/cam.cpp:47]   --->   Operation 47 'partselect' 'tmp_V_3' <Predicate = (!tmp_3 & !or_ln47)> <Delay = 0.00>
+ST_3 : Operation 48 [1/1] (1.63ns)   --->   "%i_1 = add i11 %i1_0, 2" [cam_simple/cam.cpp:40]   --->   Operation 48 'add' 'i_1' <Predicate = (!tmp_3)> <Delay = 1.63> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 1.63> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+
+State 4 <SV = 3> <Delay = 3.63>
+ST_4 : Operation 49 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* %result_V_V, i11 %tmp_V_1)" [cam_simple/cam.cpp:46]   --->   Operation 49 'write' <Predicate = (!or_ln46)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 0> <FIFO>
+
+State 5 <SV = 4> <Delay = 3.63>
+ST_5 : Operation 50 [1/1] (0.00ns)   --->   "%tmp_1 = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str2)" [cam_simple/cam.cpp:40]   --->   Operation 50 'specregionbegin' 'tmp_1' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 51 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecPipeline(i32 -1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1) nounwind" [cam_simple/cam.cpp:41]   --->   Operation 51 'specpipeline' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 52 [1/1] (0.00ns)   --->   "br label %._crit_edge337" [cam_simple/cam.cpp:46]   --->   Operation 52 'br' <Predicate = (!or_ln46)> <Delay = 0.00>
+ST_5 : Operation 53 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* %result_V_V, i11 %tmp_V_3)" [cam_simple/cam.cpp:47]   --->   Operation 53 'write' <Predicate = (!or_ln47)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 0> <FIFO>
+ST_5 : Operation 54 [1/1] (0.00ns)   --->   "br label %hls_label_1_end" [cam_simple/cam.cpp:47]   --->   Operation 54 'br' <Predicate = (!or_ln47)> <Delay = 0.00>
+ST_5 : Operation 55 [1/1] (0.00ns)   --->   "%empty_8 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str2, i32 %tmp_1)" [cam_simple/cam.cpp:48]   --->   Operation 55 'specregionend' 'empty_8' <Predicate = (!tmp_3)> <Delay = 0.00>
+ST_5 : Operation 56 [1/1] (0.00ns)   --->   "br label %.preheader" [cam_simple/cam.cpp:40]   --->   Operation 56 'br' <Predicate = (!tmp_3)> <Delay = 0.00>
+
+State 6 <SV = 2> <Delay = 3.63>
+ST_6 : Operation 57 [1/1] (0.00ns)   --->   "br label %.loopexit"   --->   Operation 57 'br' <Predicate = (!and_ln25 & !fatherSearch_read)> <Delay = 0.00>
+ST_6 : Operation 58 [1/1] (0.00ns)   --->   "br label %.loopexit"   --->   Operation 58 'br' <Predicate = (!and_ln25 & fatherSearch_read)> <Delay = 0.00>
+ST_6 : Operation 59 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* %result_V_V, i11 0)" [cam_simple/cam.cpp:50]   --->   Operation 59 'write' <Predicate = (!and_ln25)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 0> <FIFO>
+ST_6 : Operation 60 [1/1] (0.00ns)   --->   "br label %7" [cam_simple/cam.cpp:51]   --->   Operation 60 'br' <Predicate = (!and_ln25)> <Delay = 0.00>
+ST_6 : Operation 61 [1/1] (0.00ns)   --->   "ret void" [cam_simple/cam.cpp:51]   --->   Operation 61 'ret' <Predicate = true> <Delay = 0.00>
+
+State 7 <SV = 1> <Delay = 3.25>
+ST_7 : Operation 62 [1/1] (0.00ns)   --->   "%i_0 = phi i11 [ %i, %hls_label_0_end ], [ 0, %.preheader329.preheader ]"   --->   Operation 62 'phi' 'i_0' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 63 [1/1] (0.00ns)   --->   "%tmp_2 = call i1 @_ssdm_op_BitSelect.i1.i11.i32(i11 %i_0, i32 10)" [cam_simple/cam.cpp:30]   --->   Operation 63 'bitselect' 'tmp_2' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 64 [1/1] (0.00ns)   --->   "%empty_5 = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 512, i64 512, i64 512)"   --->   Operation 64 'speclooptripcount' 'empty_5' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 65 [1/1] (0.00ns)   --->   "br i1 %tmp_2, label %.loopexit.loopexit51, label %hls_label_0_begin" [cam_simple/cam.cpp:30]   --->   Operation 65 'br' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 66 [1/1] (0.00ns)   --->   "%trunc_ln30 = trunc i11 %i_0 to i10" [cam_simple/cam.cpp:30]   --->   Operation 66 'trunc' 'trunc_ln30' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_7 : Operation 67 [1/1] (0.00ns)   --->   "%zext_ln32 = zext i11 %i_0 to i64" [cam_simple/cam.cpp:32]   --->   Operation 67 'zext' 'zext_ln32' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_7 : Operation 68 [1/1] (0.00ns)   --->   "%tree_V_addr = getelementptr [1024 x i24]* %tree_V, i64 0, i64 %zext_ln32" [cam_simple/cam.cpp:32]   --->   Operation 68 'getelementptr' 'tree_V_addr' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_7 : Operation 69 [2/2] (3.25ns)   --->   "%valor_V = load i24* %tree_V_addr, align 4" [cam_simple/cam.cpp:32]   --->   Operation 69 'load' 'valor_V' <Predicate = (!tmp_2)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+ST_7 : Operation 70 [1/1] (0.00ns)   --->   "%or_ln33 = or i10 %trunc_ln30, 1" [cam_simple/cam.cpp:33]   --->   Operation 70 'or' 'or_ln33' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_7 : Operation 71 [1/1] (0.00ns)   --->   "%zext_ln33 = zext i10 %or_ln33 to i64" [cam_simple/cam.cpp:33]   --->   Operation 71 'zext' 'zext_ln33' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_7 : Operation 72 [1/1] (0.00ns)   --->   "%tree_V_addr_1 = getelementptr [1024 x i24]* %tree_V, i64 0, i64 %zext_ln33" [cam_simple/cam.cpp:33]   --->   Operation 72 'getelementptr' 'tree_V_addr_1' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_7 : Operation 73 [2/2] (3.25ns)   --->   "%valor2_V = load i24* %tree_V_addr_1, align 4" [cam_simple/cam.cpp:33]   --->   Operation 73 'load' 'valor2_V' <Predicate = (!tmp_2)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+
+State 8 <SV = 2> <Delay = 7.09>
+ST_8 : Operation 74 [1/2] (3.25ns)   --->   "%valor_V = load i24* %tree_V_addr, align 4" [cam_simple/cam.cpp:32]   --->   Operation 74 'load' 'valor_V' <Predicate = (!tmp_2)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+ST_8 : Operation 75 [1/2] (3.25ns)   --->   "%valor2_V = load i24* %tree_V_addr_1, align 4" [cam_simple/cam.cpp:33]   --->   Operation 75 'load' 'valor2_V' <Predicate = (!tmp_2)> <Delay = 3.25> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 3.25> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 24> <Depth = 1024> <RAM>
+ST_8 : Operation 76 [1/1] (0.00ns)   --->   "%compare_node_min_V = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor_V, i32 2, i32 12)" [cam_simple/cam.cpp:34]   --->   Operation 76 'partselect' 'compare_node_min_V' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_8 : Operation 77 [1/1] (0.00ns)   --->   "%compare_node_max_V = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor2_V, i32 2, i32 12)" [cam_simple/cam.cpp:35]   --->   Operation 77 'partselect' 'compare_node_max_V' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_8 : Operation 78 [1/1] (1.88ns)   --->   "%icmp_ln36 = icmp ne i11 %compare_node_min_V, %nodo_V_read" [cam_simple/cam.cpp:36]   --->   Operation 78 'icmp' 'icmp_ln36' <Predicate = (!tmp_2)> <Delay = 1.88> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 79 [1/1] (0.97ns)   --->   "%or_ln36 = or i1 %icmp_ln36, %icmp_ln36_1" [cam_simple/cam.cpp:36]   --->   Operation 79 'or' 'or_ln36' <Predicate = (!tmp_2)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 80 [1/1] (0.00ns)   --->   "br i1 %or_ln36, label %._crit_edge, label %3" [cam_simple/cam.cpp:36]   --->   Operation 80 'br' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_8 : Operation 81 [1/1] (0.00ns)   --->   "%tmp_V = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor_V, i32 13, i32 23)" [cam_simple/cam.cpp:36]   --->   Operation 81 'partselect' 'tmp_V' <Predicate = (!tmp_2 & !or_ln36)> <Delay = 0.00>
+ST_8 : Operation 82 [1/1] (1.88ns)   --->   "%icmp_ln37 = icmp ne i11 %compare_node_max_V, %nodo_V_read" [cam_simple/cam.cpp:37]   --->   Operation 82 'icmp' 'icmp_ln37' <Predicate = (!tmp_2)> <Delay = 1.88> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.95> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 83 [1/1] (0.97ns)   --->   "%or_ln37 = or i1 %icmp_ln37, %icmp_ln36_1" [cam_simple/cam.cpp:37]   --->   Operation 83 'or' 'or_ln37' <Predicate = (!tmp_2)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 84 [1/1] (0.00ns)   --->   "br i1 %or_ln37, label %hls_label_0_end, label %4" [cam_simple/cam.cpp:37]   --->   Operation 84 'br' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_8 : Operation 85 [1/1] (0.00ns)   --->   "%tmp_V_2 = call i11 @_ssdm_op_PartSelect.i11.i24.i32.i32(i24 %valor2_V, i32 13, i32 23)" [cam_simple/cam.cpp:37]   --->   Operation 85 'partselect' 'tmp_V_2' <Predicate = (!tmp_2 & !or_ln37)> <Delay = 0.00>
+ST_8 : Operation 86 [1/1] (1.63ns)   --->   "%i = add i11 %i_0, 2" [cam_simple/cam.cpp:30]   --->   Operation 86 'add' 'i' <Predicate = (!tmp_2)> <Delay = 1.63> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 1.63> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+
+State 9 <SV = 3> <Delay = 3.63>
+ST_9 : Operation 87 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* %result_V_V, i11 %tmp_V)" [cam_simple/cam.cpp:36]   --->   Operation 87 'write' <Predicate = (!or_ln36)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 0> <FIFO>
+
+State 10 <SV = 4> <Delay = 3.63>
+ST_10 : Operation 88 [1/1] (0.00ns)   --->   "%tmp = call i32 (...)* @_ssdm_op_SpecRegionBegin([12 x i8]* @p_str)" [cam_simple/cam.cpp:30]   --->   Operation 88 'specregionbegin' 'tmp' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 89 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecPipeline(i32 -1, i32 1, i32 1, i32 0, [1 x i8]* @p_str1) nounwind" [cam_simple/cam.cpp:31]   --->   Operation 89 'specpipeline' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 90 [1/1] (0.00ns)   --->   "br label %._crit_edge" [cam_simple/cam.cpp:36]   --->   Operation 90 'br' <Predicate = (!or_ln36)> <Delay = 0.00>
+ST_10 : Operation 91 [1/1] (3.63ns)   --->   "call void @_ssdm_op_Write.ap_fifo.volatile.i11P(i11* %result_V_V, i11 %tmp_V_2)" [cam_simple/cam.cpp:37]   --->   Operation 91 'write' <Predicate = (!or_ln37)> <Delay = 3.63> <Core = "FIFO">   --->   Core 32 'FIFO' <Latency = 0> <II = 1> <Delay = 3.63> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 11> <Depth = 0> <FIFO>
+ST_10 : Operation 92 [1/1] (0.00ns)   --->   "br label %hls_label_0_end" [cam_simple/cam.cpp:37]   --->   Operation 92 'br' <Predicate = (!or_ln37)> <Delay = 0.00>
+ST_10 : Operation 93 [1/1] (0.00ns)   --->   "%empty_6 = call i32 (...)* @_ssdm_op_SpecRegionEnd([12 x i8]* @p_str, i32 %tmp)" [cam_simple/cam.cpp:38]   --->   Operation 93 'specregionend' 'empty_6' <Predicate = (!tmp_2)> <Delay = 0.00>
+ST_10 : Operation 94 [1/1] (0.00ns)   --->   "br label %.preheader329" [cam_simple/cam.cpp:30]   --->   Operation 94 'br' <Predicate = (!tmp_2)> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10ns, clock uncertainty: 1.25ns.
+
+ <State 1>: 3.84ns
+The critical path consists of the following:
+	fifo write on port 'result_V_V' (cam_simple/cam.cpp:26) [102]  (3.63 ns)
+	blocking operation 0.202 ns on control path)
+
+ <State 2>: 3.25ns
+The critical path consists of the following:
+	'phi' operation ('i') with incoming values : ('i', cam_simple/cam.cpp:40) [19]  (0 ns)
+	'getelementptr' operation ('tree_V_addr_2', cam_simple/cam.cpp:42) [28]  (0 ns)
+	'load' operation ('valor.V', cam_simple/cam.cpp:42) on array 'tree_V' [29]  (3.25 ns)
+
+ <State 3>: 7.09ns
+The critical path consists of the following:
+	'load' operation ('valor.V', cam_simple/cam.cpp:42) on array 'tree_V' [29]  (3.25 ns)
+	'icmp' operation ('icmp_ln46', cam_simple/cam.cpp:46) [36]  (1.88 ns)
+	'or' operation ('or_ln46', cam_simple/cam.cpp:46) [37]  (0.978 ns)
+	blocking operation 0.978 ns on control path)
+
+ <State 4>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'result_V_V' (cam_simple/cam.cpp:46) [41]  (3.63 ns)
+
+ <State 5>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'result_V_V' (cam_simple/cam.cpp:47) [49]  (3.63 ns)
+
+ <State 6>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'result_V_V' (cam_simple/cam.cpp:50) [99]  (3.63 ns)
+
+ <State 7>: 3.25ns
+The critical path consists of the following:
+	'phi' operation ('i') with incoming values : ('i', cam_simple/cam.cpp:30) [60]  (0 ns)
+	'getelementptr' operation ('tree_V_addr', cam_simple/cam.cpp:32) [69]  (0 ns)
+	'load' operation ('valor.V', cam_simple/cam.cpp:32) on array 'tree_V' [70]  (3.25 ns)
+
+ <State 8>: 7.09ns
+The critical path consists of the following:
+	'load' operation ('valor.V', cam_simple/cam.cpp:32) on array 'tree_V' [70]  (3.25 ns)
+	'icmp' operation ('icmp_ln36', cam_simple/cam.cpp:36) [77]  (1.88 ns)
+	'or' operation ('or_ln36', cam_simple/cam.cpp:36) [78]  (0.978 ns)
+	blocking operation 0.978 ns on control path)
+
+ <State 9>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'result_V_V' (cam_simple/cam.cpp:36) [82]  (3.63 ns)
+
+ <State 10>: 3.63ns
+The critical path consists of the following:
+	fifo write on port 'result_V_V' (cam_simple/cam.cpp:37) [90]  (3.63 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

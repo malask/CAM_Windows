@@ -1,0 +1,172 @@
+INFO: [COSIM-47] Using XSIM for RTL simulation.
+INFO: [COSIM-14] Instrumenting C test bench ...
+   Build using "G:/Vivado/2019.1/msys64/mingw64/bin/g++"
+   Compiling cam.cpp_pre.cpp.tb.cpp
+   Compiling test_bench.cpp_pre.cpp.tb.cpp
+   Compiling apatb_top_function.cpp
+   Generating cosim.tv.exe
+INFO: [COSIM-302] Starting C TB testing ... 
+INFO: [COSIM-333] Generating C post check test bench ...
+INFO: [COSIM-12] Generating RTL test bench ...
+INFO: [COSIM-1] *** C/RTL co-simulation file generation completed. ***
+INFO: [COSIM-323] Starting verilog simulation. 
+INFO: [COSIM-15] Starting XSIM ...
+INFO: [COSIM-316] Starting C post checking ...
+FICHERO DE ENTRADA CON NUMERO DE DATOS 1024 BUSQUEDA 1
+---- CASE TESTING FOR PARENT CASES ---- 
+---- Testing nº of access for worst case (i = N) ---- 
+Node 1023 's father is:  
+1020
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for worst case ---- 
+ 
+---- Testing nº of access for best case (i = 1) ---- 
+Node 2 's father is:  
+1
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for best case ---- 
+ 
+---- Testing nº of access for promedium case (i = N/2)
+Node 512 's father is:  
+484
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for promedium case ---- 
+---- Finalized test for PARENT cases. Starting CHILDREN cases----
+---- CASE TESTING FOR CHILDREN CASES ---- 
+---- Testing nº of access for worst case (i = N). ---- 
+Node 1023 's children is/are: 
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for worst case ---- 
+ 
+---- Testing nº of access for best case (i = 1) ---- 
+Node 1 's children is/are: 
+2
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for best case ---- 
+ 
+---- Testing nº of access for promedium case (i = N/2)
+Node 512 's children is/are: 
+544
+SEARCH ENDED
+---- Test succesful at the moment! ----
+ 
+
+C:\Users\manug\AppData\Roaming\Xilinx\Vivado\cam_simple\binaria_normal_optimizada\sim\verilog>set PATH= 
+
+C:\Users\manug\AppData\Roaming\Xilinx\Vivado\cam_simple\binaria_normal_optimizada\sim\verilog>call G:/Vivado/2019.1/bin/xelab xil_defaultlib.apatb_top_function_top glbl -prj top_function.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm --initfile "G:/Vivado/2019.1/data/xsim/ip/xsim_ip.ini" --lib "ieee_proposed=./ieee_proposed" -s top_function  
+INFO: [XSIM 43-3496] Using init file passed via -initfile option "G:/Vivado/2019.1/data/xsim/ip/xsim_ip.ini".
+Vivado Simulator 2019.1
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: G:/Vivado/2019.1/bin/unwrapped/win64.o/xelab.exe xil_defaultlib.apatb_top_function_top glbl -prj top_function.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm --initfile G:/Vivado/2019.1/data/xsim/ip/xsim_ip.ini --lib ieee_proposed=./ieee_proposed -s top_function 
+Multi-threading is on. Using 10 slave threads.
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/glbl.v" into library work
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/AESL_autofifo_result_V_V.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module AESL_autofifo_result_V_V
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/AESL_automem_tree_V.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module AESL_automem_tree_V
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/busqueda_cam.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module busqueda_cam
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/top_function.autotb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module apatb_top_function_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/top_function.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top_function
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.busqueda_cam
+Compiling module xil_defaultlib.top_function
+Compiling module xil_defaultlib.AESL_automem_tree_V
+Compiling module xil_defaultlib.AESL_autofifo_result_V_V
+Compiling module xil_defaultlib.apatb_top_function_top
+Compiling module work.glbl
+Built simulation snapshot top_function
+
+****** Webtalk v2019.1 (64-bit)
+  **** SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+  **** IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/xsim.dir/top_function/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-186] 'C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/xsim.dir/top_function/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Fri Jul 24 18:43:28 2020. For additional details about this file, please refer to the WebTalk help file at G:/Vivado/2019.1/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Fri Jul 24 18:43:28 2020...
+
+****** xsim v2019.1 (64-bit)
+  **** SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+  **** IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/top_function/xsim_script.tcl
+# xsim {top_function} -autoloadwcfg -tclbatch {top_function.tcl}
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+source top_function.tcl
+## run all
+////////////////////////////////////////////////////////////////////////////////////
+// Inter-Transaction Progress: Completed Transaction / Total Transaction
+// Intra-Transaction Progress: Measured Latency / Latency Estimation * 100%
+//
+// RTL Simulation : "Inter-Transaction Progress" ["Intra-Transaction Progress"] @ "Simulation Time"
+////////////////////////////////////////////////////////////////////////////////////
+// RTL Simulation : 0 / 6 [0.00%] @ "125000"
+// RTL Simulation : 1 / 6 [100.00%] @ "10425000"
+// RTL Simulation : 2 / 6 [100.00%] @ "20715000"
+// RTL Simulation : 3 / 6 [100.00%] @ "31005000"
+// RTL Simulation : 4 / 6 [100.00%] @ "41295000"
+// RTL Simulation : 5 / 6 [100.00%] @ "51585000"
+// RTL Simulation : 6 / 6 [100.00%] @ "61875000"
+////////////////////////////////////////////////////////////////////////////////////
+$finish called at time : 61915 ns : File "C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_simple/binaria_normal_optimizada/sim/verilog/top_function.autotb.v" Line 456
+## quit
+INFO: [Common 17-206] Exiting xsim at Fri Jul 24 18:43:48 2020...
+FICHERO DE ENTRADA CON NUMERO DE DATOS 1024 BUSQUEDA 1
+---- CASE TESTING FOR PARENT CASES ---- 
+---- Testing nº of access for worst case (i = N) ---- 
+Node 1023 's father is:  
+1020
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for worst case ---- 
+ 
+---- Testing nº of access for best case (i = 1) ---- 
+Node 2 's father is:  
+1
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for best case ---- 
+ 
+---- Testing nº of access for promedium case (i = N/2)
+Node 512 's father is:  
+484
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for promedium case ---- 
+---- Finalized test for PARENT cases. Starting CHILDREN cases----
+---- CASE TESTING FOR CHILDREN CASES ---- 
+---- Testing nº of access for worst case (i = N). ---- 
+Node 1023 's children is/are: 
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for worst case ---- 
+ 
+---- Testing nº of access for best case (i = 1) ---- 
+Node 1 's children is/are: 
+2
+SEARCH ENDED
+---- Test succesful at the moment! ----
+---- Finalized test for best case ---- 
+ 
+---- Testing nº of access for promedium case (i = N/2)
+Node 512 's children is/are: 
+544
+SEARCH ENDED
+---- Test succesful at the moment! ----
+ 
+INFO: [COSIM-1000] *** C/RTL co-simulation finished: PASS ***

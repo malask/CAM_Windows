@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Fri Jul 24 19:20:42 2020
+# Process ID: 54736
+# Current directory: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog
+# Command line: wbtcv.exe -mode batch -source C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog/xsim.dir/top_function/webtalk/xsim_webtalk.tcl -notrace
+# Log file: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog/webtalk.log
+# Journal file: C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog\webtalk.jou
+#-----------------------------------------------------------
+source C:/Users/manug/AppData/Roaming/Xilinx/Vivado/cam_hash/solution1/sim/verilog/xsim.dir/top_function/webtalk/xsim_webtalk.tcl -notrace
