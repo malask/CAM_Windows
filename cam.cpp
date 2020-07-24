@@ -2,20 +2,8 @@
 #include "ap_int.h"
 #include "cam.h"
 
-//#define NODE_MASK 0xF // ((1<<4)-1) Cada nodo ocupa 4 bits. Esto es una máscara que he creado para
-//#define RELATION_MASK 0x3 // ((1<<2)-1 )Expresarlo en hexadecimal.
-//#define TREE_SIZE 1024
-
-// Declaracion de arbol estático
  void busqueda_cam (edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> *result) {
-	/*unsigned  position_hi, position_lo = 0;
-	if (order) {  //Significa que buscamos nuestros hijos
-		position_lo = ;
-		position_hi = WORD_BITS - 1;
-	} else {
-		position_lo = RELATION_BITS;
-		position_hi = (RELATION_BITS+NODE_BITS)-1;
-	}  // Significa que buscamos nuestros padres */
+
 #ifndef __SYNTHESIS__
 	int accesos = 0;
 #endif
