@@ -68,9 +68,14 @@ void fillHashTables(edge_t tree[TREE_SIZE]) {
 }
 void top_function(edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result){
 #pragma HLS DATAFLOW
-	busqueda_cam(tree, nodo, relationship, fatherSearch, result);
+		static hls::stream<node_t> in1("ENTRADA_1");
+		#pragma HLS STREAM variable=in1 depth=8 dim=1
+		static hls::stream<node_t> in2("ENTRADA_2");
+		#pragma HLS STREAM variable=in2 depth=8 dim=1
+	busqueda_cam(tree, nodo, relationship, fatherSearch, in1,in2);
+	combinar(in1,in2,result);
 }
-void busqueda_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result) {
+void busqueda_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &in1, hls::stream<node_t> &in2) {
 	unsigned short bucket = nodo/128;
 	node_t compare_node, compare_node_2;
 	rel_t rel,rel2;
@@ -82,10 +87,10 @@ void busqueda_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool f
 		rel = tree[i](1,0);
 		rel2 = tree[i+1](1,0);
 		if ((compare_node == nodo) && (rel == relationship)){
-			result.write(DST_NODE(tree[i]));
+			in1.write(DST_NODE(tree[i]));
 			}
 		if ((compare_node_2 == nodo) && (rel2==relationship)) {
-			result.write(DST_NODE(tree[i+1]));
+			in2.write(DST_NODE(tree[i+1]));
 			}
 		}
 	} else {
@@ -97,14 +102,38 @@ void busqueda_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool f
 			rel = tree[i](1,0);
 			rel2 = tree[i+1](1,0);
 			if ((compare_node == nodo) && (rel == relationship)){
-						result.write(SRC_NODE(tree[i]));
+						in1.write(SRC_NODE(tree[i]));
 						}
 			if ((compare_node_2 == nodo) && (rel2==relationship)) {
-						result.write(SRC_NODE(tree[i+1]));
+						in2.write(SRC_NODE(tree[i+1]));
 						}
 					}
 	}
-	result.write(EOT);
+	in1.write(EOT);
+	in2.write(EOT);
 	return;
 }
+void combinar(hls::stream<node_t> &in1, hls::stream<node_t> &in2,hls::stream<node_t> &result) {
+		bool end[2] = {false,false};
+#pragma HLS ARRAY_PARTITION variable=end complete dim=1
+		bool isData_1 = false, isData_2 = false;
+		node_t val1,val2;
+		do {
+#pragma HLS PIPELINE
+			isData_1 = in1.read_nb(val1);
+			isData_2 = in2.read_nb(val2);
 
+			if (isData_1) {
+				if (val1 == EOT) end[0]=true;
+				else result.write(val1);
+			}
+			//Aquí
+			if (isData_2) {
+				if (val2 == EOT) end[1]=true;
+				else result.write(val2);
+			}
+
+		} while ((!end[0]) || (!end[1]));
+
+		result.write(EOT);
+}
