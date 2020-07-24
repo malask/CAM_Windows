@@ -72,26 +72,37 @@ void top_function(edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool 
 }
 void busqueda_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result) {
 	unsigned short bucket = nodo/128;
-	node_t compare_node;
-	rel_t rel;
+	node_t compare_node, compare_node_2;
+	rel_t rel,rel2;
 	if (!fatherSearch) {
-	for (int i = dual_bucket[bucket][0];i<= dual_bucket[bucket][1];i++) {
+	for (int i = dual_bucket[bucket][0];i<= dual_bucket[bucket][1];i+=2) {
 #pragma HLS PIPELINE
 		compare_node = SRC_NODE(tree[i]);
+		compare_node_2 = SRC_NODE(tree[i+1]);
 		rel = tree[i](1,0);
+		rel2 = tree[i+1](1,0);
 		if ((compare_node == nodo) && (rel == relationship)){
 			result.write(DST_NODE(tree[i]));
 			}
-		}
-	} else {
-		for (int i= dual_bucket[bucket][2]; i<= dual_bucket[bucket][3];i++){
-#pragma HLS PIPELINE
-			compare_node = DST_NODE(tree[i]);
-			rel = tree[i](1,0);
-			if ((compare_node==nodo) && (rel == relationship)) {
-				result.write(SRC_NODE(tree[i]));
+		if ((compare_node_2 == nodo) && (rel2==relationship)) {
+			result.write(DST_NODE(tree[i+1]));
 			}
 		}
+	} else {
+		for (int i= dual_bucket[bucket][2]; i<= dual_bucket[bucket][3];i+=2){
+#pragma HLS PIPELINE
+			compare_node = DST_NODE(tree[i]);
+			compare_node_2 = DST_NODE(tree[i+1]);
+
+			rel = tree[i](1,0);
+			rel2 = tree[i+1](1,0);
+			if ((compare_node == nodo) && (rel == relationship)){
+						result.write(SRC_NODE(tree[i]));
+						}
+			if ((compare_node_2 == nodo) && (rel2==relationship)) {
+						result.write(SRC_NODE(tree[i+1]));
+						}
+					}
 	}
 	result.write(EOT);
 	return;
