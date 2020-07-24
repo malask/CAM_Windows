@@ -99,7 +99,11 @@
 	#define EDGE_BITS (NODE_BITS*2 + REL_BITS)
 	#define SRC_NODE(e) ((e)(EDGE_BITS-1,EDGE_BITS-NODE_BITS))
 	#define DST_NODE(e) ((e)(EDGE_BITS-NODE_BITS-1,REL_BITS))
-#define EOT 0
+	#define EOT 0
+	#define BUCKET_SIZE 128
+	#define BUCKETS_NEEDED (TREE_SIZE/BUCKET_SIZE)
+
+
 	typedef ap_uint<EDGE_BITS> edge_t;
 	typedef ap_uint<NODE_BITS> node_t;
 	typedef ap_uint<REL_BITS> rel_t;

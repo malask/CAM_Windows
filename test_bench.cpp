@@ -50,9 +50,10 @@ int main (int argc, char *argv[]) {
 	cout << "FICHERO DE ENTRADA CON NUMERO DE DATOS " << TREE_SIZE << " BUSQUEDA " << SEARCH_MODE <<  endl;
 	cnt = 0;
 	while (getline(infile,line)) {
-		// cout << cnt << " Arco leído: " << line << endl; Sabemos que funciona correctamente.
+		 cout << cnt << " Arco leído: " << line << endl;
 		tree[cnt++] = stoul(line);
 	}
+
 	fillHashTables(tree);
 
 
@@ -87,7 +88,7 @@ int main (int argc, char *argv[]) {
 	std::cout << "---- Finalized test for PARENT cases. Starting CHILDREN cases----" << std::endl;
 
 	std::cout << "---- CASE TESTING FOR CHILDREN CASES ---- " << std::endl;
-		buscarPadre = false;
+	buscarPadre = false;
 		std::cout << "---- Testing nº of access for worst case (i = N). ---- " << std::endl;
 
 		prueba = TREE_SIZE-1;

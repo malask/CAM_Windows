@@ -7,53 +7,93 @@
 //#define TREE_SIZE 1024
 
 // Declaracion de arbol estático
-static index_t parents[TREE_SIZE]={EOT};
-static index_t childrens[TREE_SIZE]={EOT};
+static node_t buckets_children[BUCKETS_NEEDED][2] = {EOT};
+static node_t buckets_fathers[BUCKETS_NEEDED][2] = {EOT};
 
-
-void fillHashTables(edge_t tree[TREE_SIZE]) {
-	bool firstChildrenFound[TREE_SIZE]={0};
-	edge_t read;
-	node_t parent;
-	node_t children;
-	for (int i = 0; i < TREE_SIZE;i++){
-#pragma HLS PIPELINE
-		read = tree[i];
-		parent=SRC_NODE(read);
-		children=DST_NODE(read);
-		if (!firstChildrenFound[parent-1]) {
-			firstChildrenFound[parent-1] = true;
-			childrens[parent-1] = i;
+/* node_t father, children = 0;
+	short current_bucket_childrens, current_bucket_fathers = 0;
+	short formula_childrens, formula_parents = 1;
+	buckets_children[current_bucket_childrens][0] = 0;
+	buckets_fathers[current_bucket_fathers][0] = 0;
+	for (int i = 0; i< TREE_SIZE;i++) {
+		father = SRC_NODE(tree[i]);
+		children = DST_NODE(tree[i]);
+		if ((father >= (BUCKET_SIZE*formula_childrens)) && (tree[i]!= 0)) {
+				buckets_children[current_bucket_childrens][1] = i-1;
+				current_bucket_childrens+=1;
+				formula_childrens++;
+				buckets_children[current_bucket_childrens][0] = i;
 		}
-		parents[children-1] = parent;
+		if ((tree[i] != 0) && (formula_parents%BUCKET_SIZE ==0) && (i != 0)) {
+			buckets_fathers[current_bucket_fathers][1] = i-1;
+			current_bucket_fathers+=1;
+			buckets_fathers[current_bucket_fathers][1] = i;
+			std::cout << "Se rellena el bucket " << current_bucket_fathers << "con el nodo " << children << " en posicion " << i << std::endl;
+
+		}
+		formula_parents++;
 	}
-/*#ifndef __SYNTHESIS__
-	for (int i=0;i<TREE_SIZE && tree[i]!=0;i++){
-		std::cout << "El primer hijo de " << i+1 << " esta en la posicion de memoria: " << childrens[i] << std::endl;
-		if (i!=0) std::cout << "El padre de " << i+1 << " esta en la posicion de memoria: " << parents[i] << std::endl;
+	buckets_children[current_bucket_childrens][1] = TREE_SIZE-1;
+	for (int i=0;i<=current_bucket_childrens;i++) {
+		std::cout << "Bucket numero: " << i << "empieza en " << buckets_children[i][0] << " y termina en " << buckets_children[i][1] << std::endl;
 	}
-#endif */
-	return;
+} */
+void fillHashTables(edge_t tree[TREE_SIZE]) {
+	node_t father,children = 0;
+	short current_bucket_children = 0;
+	short current_bucket_parents = 0;
+	short formula_children =1, formula_parents= 1;
+	buckets_children[current_bucket_children][0] = 0;
+	buckets_fathers[current_bucket_parents][0] = 0;
+	for (int i = 0; i< TREE_SIZE;i++) {
+		father = SRC_NODE(tree[i]);
+		children = DST_NODE(tree[i]);
+		if ((father >= (BUCKET_SIZE*formula_children)) && (tree[i]!= 0)) {
+			//std::cout << "Se rellena el bucket de hijos" << current_bucket_children << "con el nodo " << father << " en posicion " << i << std::endl;
+				buckets_children[current_bucket_children][1] = i-1;
+				current_bucket_children+=1;
+				formula_children++;
+				buckets_children[current_bucket_children][0] = i;
+		}
+		if (DST_NODE(tree[i])%BUCKET_SIZE ==0 && tree[i] != 0){
+			buckets_fathers[current_bucket_parents][1] = i-1;
+			current_bucket_parents +=1;
+			buckets_fathers[current_bucket_parents][0] = i;
+			//std::cout << "Se rellena el bucket de padres" << current_bucket_parents << "con el nodo " << children << " en posicion " << i << std::endl;
+
+		}
+		formula_parents++;
+	}
+	buckets_children[current_bucket_children][1] = TREE_SIZE-1;
+	/*for (int i=0;i<=current_bucket_children;i++) {
+		std::cout << "Bucket numero: " << i << "empieza en " << buckets_children[i][0] << " y termina en " << buckets_children[i][1] << std::endl;
+	} */
 }
 void top_function(edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result){
 #pragma HLS DATAFLOW
 	busqueda_cam(tree, nodo, relationship, fatherSearch, result);
 }
 void busqueda_cam(edge_t tree[TREE_SIZE],node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result) {
-	if (fatherSearch) {
-		if (tree[parents[nodo-1]](1,0) == relationship) result.write(parents[nodo-1]);
-	} else {
-		index_t firstChild = childrens[nodo-1];
-		bool end = false;
-		node_t children;
-		while(!end) {
+	unsigned short bucket = nodo/128;
+	node_t compare_node;
+	rel_t rel;
+	if (!fatherSearch) {
+	for (int i = buckets_children[bucket][0];i<= buckets_children[bucket][1];i++) {
 #pragma HLS PIPELINE
-			if (SRC_NODE(tree[firstChild]) != nodo) end=true;
-			else{
-				children=DST_NODE(tree[firstChild]);
-				result.write(children);
+		compare_node = SRC_NODE(tree[i]);
+		rel = tree[i](1,0);
+		if ((compare_node == nodo) && (rel == relationship)){
+			result.write(DST_NODE(tree[i]));
 			}
-			firstChild++;
+		}
+	} else {
+		for (int i= buckets_fathers[bucket][0]; i<= buckets_children[bucket][1];i++){
+#pragma HLS PIPELINE
+			compare_node = DST_NODE(tree[i]);
+			rel = tree[i](1,0);
+			if ((compare_node==nodo) && (rel == relationship)) {
+				result.write(SRC_NODE(tree[i]));
+			}
 		}
 	}
 	result.write(EOT);
