@@ -10,19 +10,56 @@
 #include <math.h>
 
 static int tree_size;
-bool idSorter(struct Nodo *a, struct Nodo *b) {
+static int n_buckets = 0;
+static 	std::ofstream supremo;
+
+bool idSorter(struct Nodo* a, struct Nodo* b) {
 	return (a->id_nodo < b->id_nodo);
 }
-void initNode(struct Nodo &nodo, unsigned int id, unsigned int n_hijos, unsigned short rel, struct Nodo* padre) {
+void initNode(struct Nodo& nodo, unsigned int id, unsigned int n_hijos, unsigned short rel, struct Nodo* padre) {
 	nodo.id_nodo = id;
 	nodo.n_hijos = n_hijos;
 	nodo.relacion = rel;
 	nodo.padre = padre;
 }
+unsigned int  bitExtracted(unsigned int number, int k, int p)
+{
+	return (((1 << k) - 1) & (number >> (p - 1)));
+}
+
+void generateBucketIndex(std::vector<unsigned int> arbolhls, bool isDFS) {
+	if (n_buckets == 0 || isDFS || (n_buckets%2 != 0)) return;
+	supremo <<  "node_t BUCKET_INDEX_BFS [" << n_buckets << "] = {0, ";
+	int x = arbolhls.size() +1;
+	int index = tree_size / n_buckets;
+	std::cout << "Index: " << index << std::endl;
+	int necessaryBits = bits_needed(tree_size);
+	int count = 0;
+	int formula = 1;
+	unsigned int hijo = 0;
+	unsigned int hijo_anterior = 0;
+	
+	for (int i = 0; i < x - 1; i++) {
+		hijo = bitExtracted(arbolhls[i], necessaryBits, 3);
+		if (hijo >= formula * index && (formula < n_buckets)) {
+			unsigned int padre = bitExtracted(arbolhls[i], necessaryBits, 3);
+			unsigned int padre_anterior = bitExtracted(arbolhls[i - 1], necessaryBits, 3 + necessaryBits);
+			if (padre != padre_anterior) {
+				formula += 1;
+				if (formula == n_buckets) supremo << i << "};" << std::endl;
+				else supremo << i << ",";
+			}
+		}
+	}
+	supremo << std::endl;
+}
 
 
-void treeGenerator(int nodos, int max_hijos) {
+void treeGenerator(int nodos, int max_hijos, int buckets) {
+
+	n_buckets = buckets;
 	tree_size = nodos;
+
 	int counter = 2;
 	std::vector<Nodo*> arbol;
 	std::queue<Nodo*> analizar;
@@ -31,9 +68,9 @@ void treeGenerator(int nodos, int max_hijos) {
 	Nodo* actual;
 	Nodo* temp;
 	Nodo raiz = Nodo();
-	initNode(raiz, 1, (rand() % max_hijos)+1,0,NULL);
+	initNode(raiz, 1, (rand() % max_hijos) + 1, 0, NULL);
 	analizar.push(&raiz);
-	while (arbol.size() < nodos ) {
+	while (arbol.size() < nodos) {
 		if (analizar.empty()) {
 			temp = hijos_libres.front();
 			hijos_libres.pop();
@@ -67,19 +104,14 @@ void treeGenerator(int nodos, int max_hijos) {
 		}
 		arbol.push_back(actual);
 	}
-	/*for (Nodo* i : arbol) {
-		if (i->padre == NULL) std::cout << i->id_nodo << " " << i->n_hijos << " " << "0" << " " << i->relacion << " " << std::endl;
-		else std::cout << i->id_nodo << " " << i->n_hijos << " " << i->padre->id_nodo << " " << i->relacion << " " << std::endl;
-	} */
 	reorderTreeBFS(arbol);
 	std::sort(arbol.begin(), arbol.end(), idSorter);
 	treeData(arbol);
-	graphGenerator(arbol,false);
+	graphGenerator(arbol, false);
 	bfstreeToHLS(arbol, bits_needed(nodos));
-	reorderTreeDFS(arbol);
 	//std::sort(arbol.begin(), arbol.end(), idSorter);
 	graphGenerator(arbol, true);
-	dfstreeToHLS(arbol,bits_needed(nodos));
+	dfstreeToHLS(arbol, bits_needed(nodos));
 }
 
 void reorderTreeDFS(std::vector<Nodo*> arbol) {
@@ -94,9 +126,9 @@ void reorderTreeDFS(std::vector<Nodo*> arbol) {
 		for (auto it = actual->nodos_hijos.rbegin(); it != actual->nodos_hijos.rend(); ++it) pila_dfs.push(*it);
 		actual->id_nodo = counter;
 		counter++;
-		
+
 	}
-	
+
 }
 void graphGenerator(std::vector<Nodo*> arbol, bool isDfs) {
 	std::string file_name("graphviz_tree_");
@@ -106,15 +138,15 @@ void graphGenerator(std::vector<Nodo*> arbol, bool isDfs) {
 	std::ofstream file(file_name);
 	file << " graph T { " << std::endl;
 	std::string hijos;
-	for (Nodo* i : arbol) { 
+	for (Nodo* i : arbol) {
 		if (i->n_hijos != 0) {
 			hijos += " {";
 			for (Nodo* j : i->nodos_hijos) hijos += " " + std::to_string(j->id_nodo);
-			//std::cout << hijos << std::endl;
+			
 			hijos += " }";
 			switch (i->relacion) {
 			case 0:
-				file << "   " <<i->id_nodo << "  -- " << hijos << " [color = green];" << std::endl;
+				file << "   " << i->id_nodo << "  -- " << hijos << " [color = green];" << std::endl;
 				break;
 			case 1:
 				file << "   " << i->id_nodo << " -- " << hijos << " [color = red];" << std::endl;
@@ -132,10 +164,54 @@ void graphGenerator(std::vector<Nodo*> arbol, bool isDfs) {
 	}// END FOR
 	file << "}" << std::endl;
 	file.close();
-	
+
 }
+void generateSubTrees(std::vector<std::vector<unsigned int>>& arboles, std::vector<unsigned int>& arbol, unsigned int n_arboles, unsigned int necessaryBits) {
+	int f = 0;
+	int formula = 1;
+	unsigned int padre = 0, padre_anterior = 0;
+	for (unsigned int i = 0; i < n_arboles; i++) {
+		std::vector <unsigned int> sub_arbol;
+		int counter = 0;
+	
+		bool flag = false;
+		for (; f < arbol.size() ; f++) {
+			unsigned int nodo = arbol[f];
+			padre = bitExtracted(nodo, necessaryBits, necessaryBits + 3);
+			if (((counter  >= ((tree_size / n_arboles)-1)) && padre != padre_anterior) || (f == (arbol.size()-1))) { 
+					counter += 1;
+					supremo << "node_t bfstree_" << formula << " [" << counter << "] = {";
+					sub_arbol.push_back(arbol[f]);
+					for (int h = 0; h < (sub_arbol.size()-1); h++) supremo << sub_arbol[h] << ",";
+					supremo << sub_arbol[sub_arbol.size() - 1] << "};" << std::endl;
+					formula += 1;
+					break;
+			}
+				else {
+					sub_arbol.push_back(arbol[f]);
+					padre_anterior = padre;
+					counter += 1;
+				}
+		}
+		f += 1;
+		/*if (sub_arbol.size() < (tree_size / n_arboles)) {
+			int fill = sub_arbol.size();
+			for (; fill < (tree_size / n_arboles); fill++) {
+				std::cout << fill << " valor del fill" << std::endl;
+				if (fill != (tree_size / n_arboles) - 1) supremo << "0,";
+				else supremo << "0};" << std::endl;
+				sub_arbol.push_back(0);
+			}
+		} metodo para rellenar el árbol en caso de que haga falta ajustar índices en un futuro */
+		arboles.push_back(sub_arbol);
+
+	}
+	}
+
 void bfstreeToHLS(std::vector<Nodo*> arbol, unsigned int necessaryBits) {
+	supremo << "edge_t bfstree [" << std::to_string(tree_size) << "] = { ";
 	std::string file_name("hls_tree_bfs_" + std::to_string(tree_size) + ".txt");
+	std::vector<unsigned int> arbol_hls;
 	std::ofstream file(file_name);
 	std::queue<Nodo*> cola_bfs;
 	unsigned int palabra;
@@ -147,18 +223,78 @@ void bfstreeToHLS(std::vector<Nodo*> arbol, unsigned int necessaryBits) {
 		cola_bfs.pop();
 		padre = i->id_nodo;
 		for (auto it = i->nodos_hijos.begin(); it != i->nodos_hijos.end(); ++it) {
+
 			Nodo* j = *it;
 			hijo = j->id_nodo;
-			palabra = (((padre & 0xFFFF) << (necessaryBits+2)) | ((hijo & 0xFFFF) << 2) | (i->relacion & 0xFF));
-			file << palabra << std::endl;
 			cola_bfs.push(j);
+			palabra = (((padre & 0xFFFF) << (necessaryBits + 2)) | ((hijo & 0xFFFF) << 2) | (i->relacion & 0xFF));
+			file << palabra << std::endl;
+			supremo << palabra << ",";
+			arbol_hls.push_back(palabra);
 		}
+			
+		
 	}
+	supremo << "0};" << std::endl;
+	
+
+	std::vector<std::vector<unsigned int>>subarboles;
+	generateBucketIndex(arbol_hls, false);
+	generateSubTrees(subarboles, arbol_hls, 2, necessaryBits);
+    generateSubBucketIndex(subarboles, false, 2);
+	subarboles.clear(); 
+	generateSubTrees(subarboles, arbol_hls, 4, necessaryBits);
+	generateSubBucketIndex(subarboles, false, 4);
 	file.close();
 }
 
+void generateSubBucketIndex(std::vector<std::vector<unsigned int>>& arbol_hls, bool isDFS, int n_trees) {
+	if (n_buckets == 0 || isDFS || (n_buckets % 2 != 0)) return;
+	int counter = 1;
+
+	int index = tree_size / (n_buckets * n_trees);
+	int necessaryBits = bits_needed(tree_size);
+
+	int cuenta_buckets;
+	unsigned int hijo, padre;
+
+	int formula = 0;
+	for (int i = 0; i < n_trees; i++) {
+		supremo << "short BUCKET_INDEX_BFS_" << i + 1 <<  " [" << n_buckets << "] = {0,";
+		std::vector<unsigned int> current_tree = arbol_hls[i];
+		unsigned int padre_anterior = 0;
+		for (int j = 0; j < current_tree.size(); j++) {
+			padre = bitExtracted(current_tree[j], necessaryBits, 3 + necessaryBits);
+			if (padre >= formula * index && (formula < n_buckets * (i + 1))) {
+				if (j != 0) padre_anterior = bitExtracted(current_tree[j - 1], necessaryBits, 3 + necessaryBits);
+				if (padre != padre_anterior) {
+					formula += 1;
+					if (formula == (n_buckets * (i + 1))) {
+						supremo << j << "};" << std::endl;
+						break;
+					}
+					else if (j != 0) supremo << j << ",";
+				}
+			}
+		}
+		while (formula < (n_buckets *(i + 1))) {
+			formula += 1;
+			if (formula == (n_buckets * (i + 1))) supremo << "-1};" << std::endl;
+			else supremo << "-1,";
+			
+		}
+		formula += 1;
+	}
+	supremo << std::endl;
+}
+
+
 void dfstreeToHLS(std::vector<Nodo*> arbol, unsigned int necessaryBits) {
+
 	std::string file_name("hls_tree_dfs_" + std::to_string(tree_size) + ".txt");
+	supremo << "edge_t dfstree [" << std::to_string(tree_size) << "] = { ";
+	std::vector<unsigned int> arbol_hls;
+
 	std::ofstream file(file_name);
 	std::stack<Nodo*> pila_dfs;
 	unsigned int palabra;
@@ -173,8 +309,24 @@ void dfstreeToHLS(std::vector<Nodo*> arbol, unsigned int necessaryBits) {
 		for (auto it = i->nodos_hijos.rbegin(); it != i->nodos_hijos.rend(); ++it) pila_dfs.push(*it);
 		hijo = i->id_nodo;
 		palabra = (((padre & 0xFFFF) << (necessaryBits + 2)) | ((hijo & 0xFFFF) << 2) | (i->relacion & 0xFF));
-		file << palabra << std::endl;		
+		supremo << palabra << ", ";
+
+		file << palabra << std::endl;
+		arbol_hls.push_back(palabra);
 	}
+
+	supremo << "0};" << std::endl;
+	supremo << "edge_t dfstree_1 [" << std::to_string(tree_size / 2) << "] { ";
+	int tamano = arbol_hls.size();
+	for (int i = 0; i < tamano; i++) {
+		if ((i + 1) % (tree_size / 2) == 0) {
+			supremo << arbol_hls[i] << "};" << std::endl;
+			supremo << "edge_t dfstree_2 [" << std::to_string(tree_size / 2) << "] {";
+		}
+		else if (i == tamano - 1) supremo << arbol_hls[i] << "};" << std::endl;
+		else supremo << arbol_hls[i] << ",";
+	}
+	generateBucketIndex(arbol_hls, true);
 	file.close();
 }
 
@@ -185,12 +337,14 @@ void treeData(std::vector<Nodo*> arbol) {
 	file << "ID_NODO" << "    " << "PADRE:   " << "RELACION" << "    " << "ID_HIJOS " << std::endl;
 	for (Nodo* i : arbol) {
 		if (i->id_nodo == 1) {
-			for (Nodo* j : i->nodos_hijos) hijos += " "+std::to_string(j->id_nodo);
+			for (Nodo* j : i->nodos_hijos) hijos += " " + std::to_string(j->id_nodo);
 			file << i->id_nodo << "    RAIZ        " << i->relacion << "         " << hijos << std::endl;
-		} else if (i->n_hijos != 0) {
-			for (Nodo* j : i->nodos_hijos) hijos += " "+std::to_string(j->id_nodo);
-			file << i->id_nodo << "          " << i->padre->id_nodo <<"         " << i->relacion << "        " << hijos << std::endl;
-		} else 	file << i->id_nodo << "         " << i->padre->id_nodo << "        " << i->relacion << "      " << "SIN HIJOS" << std::endl;
+		}
+		else if (i->n_hijos != 0) {
+			for (Nodo* j : i->nodos_hijos) hijos += " " + std::to_string(j->id_nodo);
+			file << i->id_nodo << "          " << i->padre->id_nodo << "         " << i->relacion << "        " << hijos << std::endl;
+		}
+		else 	file << i->id_nodo << "         " << i->padre->id_nodo << "        " << i->relacion << "      " << "SIN HIJOS" << std::endl;
 		hijos = "";
 	}
 	file.close();
@@ -211,7 +365,7 @@ void reorderTreeBFS(std::vector<Nodo*> arbol) {
 			counter++;
 		}
 	}
-	
+
 }
 
 unsigned int bits_needed(uint32_t value) {
@@ -227,8 +381,22 @@ unsigned int bits_needed(uint32_t value) {
 	return bits + value;
 }
 int main() {
-	for (int i = 7; i < 16; i++) treeGenerator(pow(2, i), 3);
+	std::ofstream fichero("data_128.c");
+	supremo.swap(fichero);
+	supremo << "#include \"cam.h\"" << std::endl;
+	treeGenerator(128, 3, 8);
+	supremo.close();
+	fichero.close();
+	/*for (int i = 7; i < 14; i++) {
+		std::ofstream fichero("data_" + std::to_string((int)pow(2, i)) + ".c");
+		supremo.swap(fichero);
+		supremo << "#include \"cam.h\"" << std::endl;
 
-		return 0;
-	}
-	
+		treeGenerator(pow(2, i), 3, 8);
+		supremo.close();
+		fichero.close();
+
+	} */
+	return 0;
+
+}
