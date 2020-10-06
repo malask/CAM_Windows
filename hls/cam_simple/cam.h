@@ -1,7 +1,7 @@
 
 //Incluir cabecera parae evitar recursividades.
-#ifndef CAM_H_
-#define CAM_H_
+#ifndef CAM_H
+#define CAM_H
 	#include "hls_stream.h"
 	#include "ap_int.h"
 
@@ -16,11 +16,11 @@
 
 	#if TREE_SIZE == 128
 		#define NODE_BITS 8
-			#if SEARCH_MODE == 1
-				#define TREE_FILE "hls_tree_bfs_128.txt"
-			#else
-				#define TREE_FILE "hls_tree_dfs_128.txt"
-			#endif
+//			#if SEARCH_MODE == 1
+//				#define TREE_FILE "hls_tree_bfs_128.txt"
+//			#else
+//				#define TREE_FILE "hls_tree_dfs_128.txt"
+//			#endif
 	#endif
 
 	#if TREE_SIZE == 256
@@ -33,6 +33,7 @@
 	#endif
 
 	#if TREE_SIZE == 512
+		#include "data_512.c"
 		#define NODE_BITS 10
 			#if SEARCH_MODE == 1
 				#define TREE_FILE "hls_tree_bfs_512.txt"
@@ -42,6 +43,7 @@
 	#endif
 
 	#if TREE_SIZE == 1024
+		#include "data_1024.c"
 		#define NODE_BITS 11
 			#if SEARCH_MODE == 1
 				#define TREE_FILE "hls_tree_bfs_1024.txt"
@@ -51,6 +53,7 @@
 	#endif
 
 	#if TREE_SIZE == 2048
+	#include "data_2048.c"
 		#define NODE_BITS 12
 			#if SEARCH_MODE == 1
 				#define TREE_FILE "hls_tree_bfs_2048.txt"
@@ -60,6 +63,7 @@
 	#endif
 
 	#if TREE_SIZE == 4096
+		#include "data_4096.c"
 		#define NODE_BITS 13
 			#if SEARCH_MODE == 1
 				#define TREE_FILE "hls_tree_bfs_4096.txt"
@@ -69,6 +73,7 @@
 	#endif
 
 	#if TREE_SIZE == 8192
+		#include "data_8192.c"
 		#define NODE_BITS 14
 			#if SEARCH_MODE == 1
 				#define TREE_FILE "hls_tree_bfs_8192.txt"
@@ -100,12 +105,15 @@
 	#define SRC_NODE(e) ((e)(EDGE_BITS-1,EDGE_BITS-NODE_BITS))
 	#define DST_NODE(e) ((e)(EDGE_BITS-NODE_BITS-1,REL_BITS))
 	#define EOT 0
+
 	typedef ap_uint<EDGE_BITS> edge_t;
 	typedef ap_uint<NODE_BITS> node_t;
 	typedef ap_uint<REL_BITS> rel_t;
 
-	void busqueda_cam (edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void top_function (edge_t tree[TREE_SIZE], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
+	extern edge_t bfstree[];
+
+	void busqueda_cam (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
+	void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
 
 #endif
 
