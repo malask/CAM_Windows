@@ -85,16 +85,24 @@ void results(std::vector<Nodo*> arbol) {
 		}
 	}
 
-	fichero << "int results_childrens[" << tree_size / 4 << "] = {";
+	std::vector<int> hijos;
+	int contador = 0;
 	for (std::map<int, Nodo*>::iterator it = passed.begin(); it != passed.end(); ++it) {
-		int hijos = 0;
 		if (it->second->nodos_hijos.size() > 0) {
-			for (Nodo* j : it->second->nodos_hijos) hijos += j->id_nodo;
+			for (Nodo* j : it->second->nodos_hijos) {
+				hijos.push_back(j->id_nodo);
+				contador += 1;
+			}
 		}
-		if (std::next(it) == passed.end()) fichero << hijos << "};" << std::endl;
-		else fichero << hijos << ",";
-
+		else {
+			hijos.push_back(0);
+			contador += 1;
+		}
 	}
+	fichero << "int results_childrens  [" << contador << "] = {";
+	for (int i = 0; i < hijos.size() - 1; i++) fichero << hijos[i] << ",";
+	fichero << hijos[hijos.size() - 1] << "};" << std::endl;
+	fichero.close();
 }
 
 void treeGenerator(int nodos, int max_hijos, int buckets) {

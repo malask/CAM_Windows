@@ -1,0 +1,1 @@
+call G:\Vivado\2019.1\bin\vivado_hls.bat -f script.tcl
