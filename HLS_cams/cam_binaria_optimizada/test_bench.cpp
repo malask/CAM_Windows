@@ -51,8 +51,10 @@ int main (int argc, char *argv[]) {
 					std::cout<< " ---- No nodes detected for this case. Try again ---- " << prueba << " ---- " <<std::endl;
 
 				} else {
+
 						while(!salida_hw.empty()){
 							salida_lectura = salida_hw.read();
+							cout << "y es " << salida_lectura << endl;
 							if (salida_lectura == EOT && prueba != 1){
 								assert(salida_hw.empty()== true);
 							}else{
@@ -70,7 +72,6 @@ int main (int argc, char *argv[]) {
 		prueba = selected[i];
 		bool flag = false;
 		top_function(prueba,rel,buscarPadre,salida_hw);
-		cout << "Los hijos del nodo " << prueba << " son: " ;
 		if (results_childrens[cont_hij] == EOT) {
 			salida_lectura = salida_hw.read();
 			assert(salida_lectura == results_childrens[cont_hij]);

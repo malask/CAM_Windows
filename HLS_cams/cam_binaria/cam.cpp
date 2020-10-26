@@ -13,10 +13,9 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 	ap_uint<REL_BITS> node_relation =0;
 	ap_uint<NODE_BITS> compare_node_min, compare_node_max=0;
 	//bool flag =  false;
-	valor = bfstree[0];
 	if (fatherSearch) {
-		for (int i = 1; i < TREE_SIZE/2; i+=2) {
-//#pragma HLS PIPELINE
+		for (int i = 0; i < TREE_SIZE; i+=2) {
+ //#pragma HLS PIPELINE
 					  valor = bfstree[i];
 					  valor2 = bfstree[i+1];
 					  node_relation = valor(1,0);
@@ -31,8 +30,8 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 					 // valor = bfstree[i];
 		}
 	} else {
-		for (int i = 1; i < TREE_SIZE/2; i+=2) {
-//#pragma HLS PIPELINE
+		for (int i = 0; i < TREE_SIZE; i+=2) {
+// #pragma HLS PIPELINE
 			valor = bfstree[i];
 			valor2 = bfstree[i+1];
 			node_relation = valor(1,0);
@@ -45,3 +44,4 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 }
 	result.write(EOT);
 	}
+

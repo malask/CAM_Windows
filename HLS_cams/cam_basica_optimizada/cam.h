@@ -1,5 +1,3 @@
-
-//Incluir cabecera parae evitar recursividades.
 #ifndef CAM_H_
 #define CAM_H_
 	#include "hls_stream.h"
@@ -66,4 +64,5 @@
 	void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
 
 #endif
+
 

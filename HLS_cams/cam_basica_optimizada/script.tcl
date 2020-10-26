@@ -15,7 +15,7 @@ foreach i $tamanos {
 	add_files ./HLS_cams/cam_basica_optimizada/cam.cpp -cflags $short_flag
 	add_files ./HLS_cams/cam_basica_optimizada/cam.h -cflags $short_flag
 	add_files $fullDatFile
-	add_files $fullResFile
+	add_files -tb $fullResFile
 	add_files -tb ./HLS_cams/cam_basica_optimizada/test_bench.cpp -cflags $long_flag -csimflags "-Wno-unknown-pragmas"
 	set_top top_function
 	open_solution -reset solution1

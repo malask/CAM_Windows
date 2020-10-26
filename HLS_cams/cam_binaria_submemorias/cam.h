@@ -1,5 +1,3 @@
-
-//Incluir cabecera parae evitar recursividades.
 #ifndef CAM_H_
 #define CAM_H_
 	#include "hls_stream.h"
@@ -61,10 +59,10 @@
 	typedef ap_uint<NODE_BITS> node_t;
 	typedef ap_uint<REL_BITS> rel_t;
 
-	void top_function( node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void busqueda_cam (edge_t subtree[],short size,node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result1, hls::stream<node_t> &result2);
+
+	void top_function(edge_t tree1[TREE_SIZE/2], edge_t tree2[TREE_SIZE/2], node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
+	void busqueda_cam(edge_t tree[TREE_SIZE/2], bool number, node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result1, hls::stream<node_t> &result2);
 	void combinar(hls::stream<node_t> &in1,hls::stream<node_t> &in2,hls::stream<node_t> &in3,hls::stream<node_t> &in4, hls::stream<node_t> &result);
+
 #endif
-
-
 

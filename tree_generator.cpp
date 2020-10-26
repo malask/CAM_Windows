@@ -31,32 +31,78 @@ unsigned int  bitExtracted(unsigned int number, int k, int p)
 
 void generateBucketIndex(std::vector<unsigned int> arbolhls, bool isDFS) {
 	if (n_buckets == 0 || isDFS || (n_buckets%2 != 0)) return;
-	supremo <<  "short BUCKET_INDEX_BFS [" << n_buckets << "] = {0, ";
-	int x = arbolhls.size() +1;
+	supremo <<  "short BUCKET_INDEX_BFS [" << n_buckets << "] = {0,";
+	
 	int index = tree_size / n_buckets;
-	std::cout << "Index: " << index << std::endl;
 	int necessaryBits = bits_needed(tree_size);
 	int count = 0;
 	int formula = 1;
-	unsigned int hijo = 0;
-	unsigned int hijo_anterior = 0;
-	
-	for (int i = 0; i < x - 1; i++) {
-		hijo = bitExtracted(arbolhls[i], necessaryBits, 3);
-		if (hijo >= formula * index && (formula < n_buckets)) {
-			unsigned int padre = bitExtracted(arbolhls[i], necessaryBits, 3);
+	unsigned int padre = 0;
+	unsigned int padre_anterior = 0;
+	std::cout << "Para el arbol : " << tree_size << std::endl;
+	for (int i = 0; i < tree_size -1; i++) {
+		padre = bitExtracted(arbolhls[i], necessaryBits, 3 + necessaryBits);
+		if (padre == formula * index && (formula < n_buckets)) {
 			unsigned int padre_anterior = bitExtracted(arbolhls[i - 1], necessaryBits, 3 + necessaryBits);
 			if (padre != padre_anterior) {
+				std::cout << "Padre: " << padre << " y padre anterior: " << padre_anterior << std::endl;
+				std::cout << "Valor: " << arbolhls[i] << std::endl;
 				formula += 1;
+				if (formula == n_buckets) supremo << i << "};"  << std::endl;
+				else supremo << i <<",";
+			}
+		}
+		else if (padre > formula * index && (formula < n_buckets)) {
+			unsigned int padre_anterior = bitExtracted(arbolhls[i - 1], necessaryBits, 3 + necessaryBits);
+			if (padre != padre_anterior) {
+				std::cout << "Padre mayor: " << padre << " y padre anterior: " << padre_anterior << std::endl;
+				std::cout << "Valor hls: " << arbolhls[i] << std::endl;
+				formula += 1; 
+				
 				if (formula == n_buckets) supremo << i << "};" << std::endl;
 				else supremo << i << ",";
 			}
 		}
 	}
 	supremo << std::endl;
+	supremo << "short FULL_CHILDREN_BUCKET_INDEX_BFS[" << tree_size << "] = {0";
+	padre = 1;
+	padre_anterior = 1;
+	std::vector<bool> visited;
+	std::vector<int> child_pos;
+	visited.push_back(true);
+	for (int i = 0; i < tree_size; i++) {
+		visited.push_back(false);
+		child_pos.push_back(0);
+	}
+	std::cout << "Valor inicial: " << visited[0] << std::endl;
+	for (int i = 0; i < tree_size - 1; i++) {
+		padre = bitExtracted(arbolhls[i], necessaryBits, 3 + necessaryBits);
+		if (!visited[padre - 1]) {
+			visited[padre - 1] = true;
+			child_pos[padre - 1] = i;
+		}
+	}
+	for (int i = 1; i < tree_size; i++) {
+		supremo << "," << child_pos[i];
+	}
+	supremo << "};" << std::endl;
+	supremo << "short FULL_PARENTS_BUCKET_INDEX_BFS[" << tree_size << "] = {-1";
+	int buscar = 2;
+	for (int j = 1; j < tree_size; j++) {
+		for (int i = 0; i < tree_size - 1; i++) {
+			padre = bitExtracted(arbolhls[i], necessaryBits, 3);
+			if (padre == buscar) {
+				supremo << "," << i;
+				buscar += 1;
+				break;
+			}
+		}
+	}
+	supremo << "};" << std::endl;
 }
 
-void results(std::vector<Nodo*> arbol) {
+void results(std::vector<Nodo*> arbol, int n_hijos) {
 	std::ofstream fichero("results_" + std::to_string(tree_size) + ".cpp");
 	std::map<int, Nodo*> passed;
 
@@ -86,23 +132,37 @@ void results(std::vector<Nodo*> arbol) {
 	}
 
 	std::vector<int> hijos;
-	int contador = 0;
+	//int contador = 0;
+	fichero << "int results_childrens [" << tree_size/4 << "][" << n_hijos << "] = {";
+
 	for (std::map<int, Nodo*>::iterator it = passed.begin(); it != passed.end(); ++it) {
+		fichero << "{";
 		if (it->second->nodos_hijos.size() > 0) {
-			for (Nodo* j : it->second->nodos_hijos) {
-				hijos.push_back(j->id_nodo);
-				contador += 1;
+			for (int i = 0; i < it->second->nodos_hijos.size();i++) {
+				fichero << it->second->nodos_hijos[i]->id_nodo;
+					if ((i + 1) != (it->second->nodos_hijos.size())) fichero << ",";
+
+				
 			}
 		}
 		else {
+			fichero << 0;
 			hijos.push_back(0);
-			contador += 1;
+			//contador += 1;
 		}
+		if (std::next(it) == passed.end()) fichero << "}};" << std::endl;
+		else fichero << "},";
 	}
-	fichero << "int results_childrens  [" << contador << "] = {";
-	for (int i = 0; i < hijos.size() - 1; i++) fichero << hijos[i] << ",";
-	fichero << hijos[hijos.size() - 1] << "};" << std::endl;
+
+	fichero << "int n_hijos [" << tree_size / 4 << "] = {";
+	for (std::map<int, Nodo* >::iterator it = passed.begin(); it != passed.end(); ++it) {
+		if (std::next(it) == passed.end()) {
+			fichero << it->second->n_hijos << "};" << std::endl;
+		}
+		else fichero << it->second->n_hijos << ",";
+	}
 	fichero.close();
+
 }
 
 void treeGenerator(int nodos, int max_hijos, int buckets) {
@@ -160,7 +220,7 @@ void treeGenerator(int nodos, int max_hijos, int buckets) {
 	
 	std::sort(arbol.begin(), arbol.end(), idSorter);
 	treeData(arbol);
-	results(arbol);
+	results(arbol,max_hijos);
 	graphGenerator(arbol, false);
 	bfstreeToHLS(arbol, bits_needed(nodos));
 	//std::sort(arbol.begin(), arbol.end(), idSorter);
@@ -222,45 +282,22 @@ void graphGenerator(std::vector<Nodo*> arbol, bool isDfs) {
 }
 void generateSubTrees(std::vector<std::vector<unsigned int>>& arboles, std::vector<unsigned int>& arbol, unsigned int n_arboles, unsigned int necessaryBits) {
 	int f = 0;
-	int formula = 1;
-	unsigned int padre = 0, padre_anterior = 0;
-	for (unsigned int i = 0; i < n_arboles; i++) {
-		std::vector <unsigned int> sub_arbol;
-		int counter = 0;
-	
-		bool flag = false;
-		for (; f < arbol.size() ; f++) {
-			unsigned int nodo = arbol[f];
-			padre = bitExtracted(nodo, necessaryBits, necessaryBits + 3);
-			if (((counter  >= ((tree_size / n_arboles)-1)) && padre != padre_anterior) || (f == (arbol.size()-1))) { 
-					counter += 1;
-					supremo << tree_string << "bfstree_" << n_arboles << "_" << formula << " [" << counter << "] = {";
-					sub_arbol.push_back(arbol[f]);
-					for (int h = 0; h < (sub_arbol.size()-1); h++) supremo << sub_arbol[h] << ",";
-					supremo << sub_arbol[sub_arbol.size() - 1] << "};" << std::endl;
-					formula += 1;
-					break;
-			}
-				else {
-					sub_arbol.push_back(arbol[f]);
-					padre_anterior = padre;
-					counter += 1;
-				}
-		}
-		f += 1;
-		/*if (sub_arbol.size() < (tree_size / n_arboles)) {
-			int fill = sub_arbol.size();
-			for (; fill < (tree_size / n_arboles); fill++) {
-				std::cout << fill << " valor del fill" << std::endl;
-				if (fill != (tree_size / n_arboles) - 1) supremo << "0,";
-				else supremo << "0};" << std::endl;
-				sub_arbol.push_back(0);
-			}
-		} metodo para rellenar el árbol en caso de que haga falta ajustar índices en un futuro */
-		arboles.push_back(sub_arbol);
 
+	for (unsigned int i = 0; i < n_arboles; i++) {
+		std::vector<unsigned int> sub_arbol;
+		int limit_loop = (i+1) * (tree_size / n_arboles);
+		supremo << tree_string << " bfstree_" << n_arboles << "_" << i+1 << " [" << tree_size / n_arboles << "] = {";
+		for (; f < limit_loop-1; f++) sub_arbol.push_back(arbol[f]);
+		for (int j = 0; j < sub_arbol.size() - 1; j++) supremo << sub_arbol[j] << ",";
+		if (i == n_arboles - 1) supremo << "0};" << std::endl;
+		else supremo << sub_arbol[sub_arbol.size() - 1] << "};" << std::endl;
+		
+		arboles.push_back(sub_arbol);
+		
+		}
 	}
-	}
+	
+	
 
 void bfstreeToHLS(std::vector<Nodo*> arbol, unsigned int necessaryBits) {
 	supremo << tree_string << "bfstree [" << std::to_string(tree_size) << "] = { ";
