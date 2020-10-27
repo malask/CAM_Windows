@@ -44,6 +44,7 @@
  				  }
  				  if ((compare_node_max == nodo) && (relationship == node_relation_max)) {
  					  result2.write(SRC_NODE(valor_max));
+                 
  				  }
  // Este if es para buscar los hijos del nodo proporcionado
  }
