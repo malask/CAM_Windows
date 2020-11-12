@@ -5,56 +5,30 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-//#include "data_128.c"
+#include <ctype.h>
 
 using namespace std;
 
 
-int main (int argc, char *argv[]) {
+int main () {
 	ifstream infile;
 	string line;
 	unsigned int cnt = 0;
-	extern int caminos_padres[];
-	extern int caminos_hijos[];
-	extern int selected[];
-	node_t prueba;
+	hls::stream<node_t> salida_hw;
+	word_t prueba = 48;
+	//top_function(prueba,op,salida_hw);
+	word_t tmp;
+	tmp = ((12 & 0xFFFF) << 2 | (0 &0xFF)); // DUMBO
+	top_function(tmp,'u',salida_hw);
+	assert(salida_hw.empty()==false);
+node_t salida;
+salida = salida_hw.read();
+	top_function(tmp,'i',salida_hw);
+salida = salida_hw.read();
+tmp = ((4 & 0xFFFF) << 2 | (0 &0xFF));
+top_function(tmp,'d',salida_hw);
 
-
-	node_t salida_lectura;
-
-	bool buscarPadre = true;
-	hls::stream<node_t> salida_hw_1("CANAL_RESULTADO_1");
-	std::vector<node_t> hijos;
-    short relation = 0;
-	for (int i = 0; i < TREE_SIZE/4;i++) {
-		prueba = selected[i];
-		cout << "Camino de padres del nodo: " << prueba << ": " << endl;
-		word_t palabra = (((prueba & 0xFFFF) << 2) | (relation & 0xFF));
-		top_function(palabra,true,salida_hw_1);
-		while(!salida_hw_1.empty()) {
-			salida_lectura = salida_hw_1.read();
-			assert(caminos_padres[cnt]==salida_lectura);
-			cout << salida_lectura << " " ;
-			cnt+=1;
-
-		}
-		cout << endl;
-	}
-
-    cnt = 0;
-    for (int i = 0; i < TREE_SIZE/4; i++) {
-    	prueba = selected[i];
-    	cout << "Camino de los hijos de " << prueba << ": " << endl;
-		word_t palabra = (((prueba & 0xFFFF) << 2) | (relation & 0xFF));
-		top_function(palabra,false,salida_hw_1);
-		while (!salida_hw_1.empty()) {
-			salida_lectura = salida_hw_1.read();
-			assert(caminos_hijos[cnt]==salida_lectura);
-			cout << salida_lectura << " ";
-			cnt+=1;
-		}
-		cout << endl;
-    }
+	cout << "Salida: "  << salida << endl;
 	return 0;
 
 }

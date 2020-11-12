@@ -1,16 +1,19 @@
 #ifndef CAM_H_
 #define CAM_H_
-	#include "hls_stream.h"
-	#include "ap_int.h"
 
-	#ifndef SEARCH_MODE
-	#define SEARCH_MODE 1
-	#endif
+#include "hls_stream.h"
+#include "ap_int.h"
+#include <bitset>
+#include <ctype.h>
 
-	#ifndef TREE_SIZE
-	#define TREE_SIZE 128
-	#endif
+#ifndef TREE_SIZE
+#define TREE_SIZE 128
+#endif
 
+
+#if TREE_SIZE == 14
+#define NODE_BITS 4
+#endif
 
 	#if TREE_SIZE == 128
 		#define NODE_BITS 8
@@ -68,8 +71,8 @@
 
 
 	void busqueda_cam (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void top_function (word_t nodo, bool fatherSearch, hls::stream<node_t> &result);
-	void busqueda_scone(word_t word, bool fatherSearch, hls::stream<node_t> &in1, hls::stream<node_t> &path);
+	void top_function (word_t nodo, char operation, hls::stream<node_t> &path);
+	void busqueda_scone(word_t word, bool upOrDown,  hls::stream<node_t> &path, unsigned short &count, std::bitset<8> marks[]);
 
 #endif
 
