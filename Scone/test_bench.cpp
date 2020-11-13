@@ -27,8 +27,13 @@ salida = salida_hw.read();
 salida = salida_hw.read();
 tmp = ((4 & 0xFFFF) << 2 | (0 &0xFF));
 top_function(tmp,'d',salida_hw);
-
+salida = salida_hw.read();
+top_function(NULL,'r', salida_hw);
+while (!salida_hw.empty()){
+	salida = salida_hw.read();
 	cout << "Salida: "  << salida << endl;
+
+}
 	return 0;
 
 }

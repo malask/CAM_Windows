@@ -57,6 +57,8 @@
 	#define SRC_NODE(e) ((e)(EDGE_BITS-1,EDGE_BITS-NODE_BITS))
 	#define DST_NODE(e) ((e)(EDGE_BITS-NODE_BITS-1,REL_BITS))
 	#define EOT 0
+	#define N_NODES 12
+
 
 	#define WORD_SIZE (NODE_BITS+REL_BITS)
 	#define WORD_NODE(e) ((e)(NODE_BITS+REL_BITS-1,REL_BITS))
@@ -72,7 +74,7 @@
 
 	void busqueda_cam (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
 	void top_function (word_t nodo, char operation, hls::stream<node_t> &path);
-	void busqueda_scone(word_t word, bool upOrDown,  hls::stream<node_t> &path, unsigned short &count, std::bitset<8> marks[]);
+	void busqueda_scone(word_t word, bool upOrDown, bool intersection, hls::stream<node_t> &path, unsigned short &count, ap_uint<8> marks[]);
 
 #endif
 
