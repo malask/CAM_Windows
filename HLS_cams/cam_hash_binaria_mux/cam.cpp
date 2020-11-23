@@ -54,18 +54,10 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 
 					  node_relation = valor(1,0);
 					  compare_node_min= DST_NODE(valor);
-					  if ((compare_node_min == nodo) && (relationship == node_relation)) {
-						  flag = true;
-						  result1.write(SRC_NODE(valor));
-						  break;
-					  }
+					  if ((compare_node_min == nodo) && (relationship == node_relation)) result1.write(SRC_NODE(valor));
 						valor = bfstree[i];
 					compare_node_max = DST_NODE(valor2);
-					if ((compare_node_max == nodo) && (relationship == node_relation)) {
-						flag=true;
-						result2.write(SRC_NODE(valor2));
-						break;
-					}
+					if ((compare_node_max == nodo) && (relationship == node_relation)) result2.write(SRC_NODE(valor2));
 					valor2 = bfstree[i-1];
 
 		}

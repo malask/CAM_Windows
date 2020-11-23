@@ -37,18 +37,12 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 
 					  node_relation = valor(1,0);
 					  compare_node = DST_NODE(valor);
-					  if ((compare_node == nodo) && (relationship == node_relation)) {
-						  flag = true;
-						  result.write(SRC_NODE(valor));
-						  break;
-					  }
+					  if ((compare_node == nodo) && (relationship == node_relation)) result.write(EOT);
 						valor = bfstree[i];
 		}
-		if (!flag) {
 			node_relation = valor(1,0);
 			compare_node = DST_NODE(valor);
 			 if ((compare_node == nodo) && (relationship == node_relation)) result.write(SRC_NODE(valor));
-		}
 
 	} else {
 		min_limit = BUCKET_INDEX_BFS[bucket];

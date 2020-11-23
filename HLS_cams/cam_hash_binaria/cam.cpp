@@ -23,7 +23,7 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 
 	ap_uint<EDGE_BITS> valor = 0;
 	ap_uint<EDGE_BITS> valor2 = 0;
-	ap_uint<REL_BITS> node_relation =0;
+	ap_uint<REL_BITS> node_relation_1 = 0, node_relation_2 =0;
 	bool flag = false;
 	ap_uint<NODE_BITS> compare_node_min=0;
 	ap_uint<NODE_BITS> compare_node_max=0;
@@ -45,30 +45,23 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 		for (int i = max_limit-2; i >= 0; i-=2) {
 #pragma HLS PIPELINE
 
-					  node_relation = valor(1,0);
+					  node_relation_1 = valor(1,0);
 					  compare_node_min= DST_NODE(valor);
-					  if ((compare_node_min == nodo) && (relationship == node_relation)) {
-						  flag = true;
-						  result.write(SRC_NODE(valor));
-						  break;
-					  }
-						valor = bfstree[i];
+					if ((compare_node_min == nodo) && (relationship == node_relation_1)) result.write(SRC_NODE(valor));
+					valor = bfstree[i];
+					node_relation_2 = valor2(1, 0);
 					compare_node_max = DST_NODE(valor2);
-					if ((compare_node_max == nodo) && (relationship == node_relation)) {
-						flag=true;
-						result.write(SRC_NODE(valor2));
-						break;
-					}
+					if ((compare_node_max == nodo) && (relationship == node_relation_2)) result.write(SRC_NODE(valor2));
 					valor2 = bfstree[i-1];
 
 		}
-		if (!flag) {
-			node_relation = valor(1,0);
+			node_relation_1 = valor(1,0);
 			compare_node_min = DST_NODE(valor);
-			 if ((compare_node_min == nodo) && (relationship == node_relation)) result.write(SRC_NODE(valor));
+			 if ((compare_node_min == nodo) && (relationship == node_relation_1)) result.write(SRC_NODE(valor));
+			 node_relation_2 = valor2(1, 0);
 			compare_node_max = DST_NODE(valor2);
-			 if ((compare_node_max == nodo) && (relationship == node_relation)) result.write(SRC_NODE(valor2));
-		}
+			 if ((compare_node_max == nodo) && (relationship == node_relation_2)) result.write(SRC_NODE(valor2));
+		
 
 	} else {
 		valor = bfstree[min_limit];
@@ -78,26 +71,29 @@ void top_function (node_t nodo, rel_t relationship, bool fatherSearch, hls::stre
 #pragma HLS PIPELINE
 
 
-			node_relation = valor(1,0);
+			node_relation_1 = valor(1,0);
 			compare_node_min = SRC_NODE(valor);
 		  if (flag && (compare_node_min != nodo)) break;
-		  if ((compare_node_min == nodo) && (relationship == node_relation)) {
+		  if ((compare_node_min == nodo) && (relationship == node_relation_1)) {
 			  flag=true;
 			  result.write(DST_NODE(valor));
 		}
 		valor = bfstree[min_limit];
+		node_relation_2 = valor2(1, 0);
 		compare_node_max = SRC_NODE(valor2);
 		if (flag && (compare_node_max != nodo)) break;
-		if ((compare_node_max == nodo) && (relationship == node_relation)) {
+		if ((compare_node_max == nodo) && (relationship == node_relation_2)) {
 			flag = true;
 			result.write(DST_NODE(valor2));
 		}
 		valor2 = bfstree[min_limit+1];
 	}
 		compare_node_min = SRC_NODE(valor);
-		if ((compare_node_min == nodo) && (relationship == node_relation)) result.write(DST_NODE(valor));
+		node_relation_1 = valor(1, 0);
+		if ((compare_node_min == nodo) && (relationship == node_relation_1)) result.write(DST_NODE(valor));
+		node_relation_2 = valor2(1, 0);
 		compare_node_max = SRC_NODE(valor2);
-		if ((compare_node_max == nodo) && (relationship == node_relation)) result.write(DST_NODE(valor2));
+		if ((compare_node_max == nodo) && (relationship == node_relation_2)) result.write(DST_NODE(valor2));
 }
 	result.write(EOT);
 }
