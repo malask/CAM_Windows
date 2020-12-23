@@ -5,6 +5,10 @@
 #include "ap_int.h"
 #include <ctype.h>
 
+#define TREE_SIZE 160
+#define N_NODES 128
+#define NODE_BITS 8
+/*
 #define TREE_SIZE 80
 #define N_NODES 64
 #define NODE_BITS 7 // Nodos = Bits para representar 64 = log2(64) +1

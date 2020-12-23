@@ -8,6 +8,9 @@
 
 
 void top_function(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
+#pragma HLS INTERFACE s_axilite register port=entry bundle=CONTROL_BUS
+#pragma HLS INTERFACE s_axilite register port=return bundle=CONTROL_BUS
+#pragma HLS INTERFACE s_axilite register port=op bundle=CONTROL_BUS
 	static unsigned short count;
 #pragma HLS reset variable=count
 	static ap_uint<8> marks[N_NODES];

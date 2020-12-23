@@ -20,7 +20,7 @@ int main () {
 	unsigned int cnt = 0;
 	extern edge_t bfstree[];
 	hls::stream<node_t> salida_hw;
-	node_t node = 64;
+	node_t node = 127;
 	rel_t rel = 0;
 	cmd_scone_t prueba = (node,rel);
 
@@ -33,7 +33,7 @@ int main () {
 	top_function(1,PROPAGATE,salida_hw); // Operacion de propagación de la relacion 1 por los nodos marcados
 	salida = salida_hw.read();
 
-	node = 47;
+	node = 8;
 	rel=0;
 	prueba = (node,rel);
 	top_function(prueba,DOWNSCAN,salida_hw);  // Operacion downscan desde el 8
