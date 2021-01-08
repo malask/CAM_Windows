@@ -68,7 +68,9 @@ void scone_engine(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
 	{
 	 intersection_loop:	for (int i = 0; i < N_NODES; i++) {
 #pragma HLS PIPELINE
-			if (marks[i] == entry) path.write(i+1);
+			//if (marks[i] == entry) 				path.write(i+1);
+
+				path.write(marks[i]);
 	}
 		break;
 	}
