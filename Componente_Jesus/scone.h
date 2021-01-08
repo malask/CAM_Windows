@@ -13,7 +13,7 @@
 #define N_NODES 64
 #define NODE_BITS 7 // Nodos = Bits para representar 64 = log2(64) +1
 /*
-#define TREE_SIZE 160 // El tamaño de la tabla de relaciones
+#define TREE_SIZE 160 // El tamaï¿½o de la tabla de relaciones
 #define NODE_BITS 8 // Numero de bits
 #define N_NODES 128 // Numero de nodos que hay en el arbol
 
@@ -60,7 +60,7 @@ typedef enum {
 
 
 	void busqueda_cam (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void top_function (cmd_scone_t nodo, scone_ops op, hls::stream<node_t> &path);
+	void scone_engine (cmd_scone_t nodo, scone_ops op, hls::stream<node_t> &path);
 	void scan(cmd_scone_t word, bool propagate, bool upOrDown, unsigned short &count, ap_uint<8> marks[TREE_SIZE], hls::stream<node_t> &in1);
 
 #endif

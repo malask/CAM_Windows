@@ -24,29 +24,43 @@ int main () {
 	rel_t rel = 0;
 	cmd_scone_t prueba = (node,rel);
 
-	top_function(prueba,UPSCAN,salida_hw); // Operacion upScan desde el nodo 127.
-	assert(salida_hw.empty()==false);
+	scone_engine(prueba,UPSCAN,salida_hw); // Operacion upScan desde el nodo 127.
+//	assert(salida_hw.empty()==false);
 	node_t salida;
-	salida = salida_hw.read();
+//	salida = salida_hw.read();
+	while (!salida_hw.empty()){
+			salida = salida_hw.read();
+			cout << "Salida UP: "  << salida << endl;
+		}
 
-
-	top_function(1,PROPAGATE,salida_hw); // Operacion de propagación de la relacion 1 por los nodos marcados
-	salida = salida_hw.read();
+	scone_engine(1,PROPAGATE,salida_hw); // Operacion de propagaciï¿½n de la relacion 1 por los nodos marcados
+	//salida = salida_hw.read();
+	while (!salida_hw.empty()){
+			salida = salida_hw.read();
+			cout << "Salida PROP: "  << salida << endl;
+		}
 
 	node = 8;
 	rel=0;
 	prueba = (node,rel);
-	top_function(prueba,DOWNSCAN,salida_hw);  // Operacion downscan desde el 8
-	salida = salida_hw.read();
+	scone_engine(prueba,DOWNSCAN,salida_hw);  // Operacion downscan desde el 8
+	//salida = salida_hw.read();
+	while (!salida_hw.empty()){
+			salida = salida_hw.read();
+			cout << "Salida DOWN: "  << salida << endl;
+		}
 
-	top_function(6,INTERSECTION, salida_hw); // Operacion intersección
+	scone_engine(6,INTERSECTION, salida_hw); // Operacion intersecciï¿½n
 	while (!salida_hw.empty()){
 		salida = salida_hw.read();
-		cout << "Salida: "  << salida << endl;
+		cout << "Salida INTER: "  << salida << endl;
 	}
 
-	top_function(1,CLEAR,salida_hw);  // Reset
-	salida = salida_hw.read();
+	scone_engine(1,CLEAR,salida_hw);  // Reset
+	while (!salida_hw.empty()){
+			salida = salida_hw.read();
+			cout << "Salida CLEAR: "  << salida << endl;
+		}
 
 	return 0;
 }

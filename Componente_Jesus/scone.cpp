@@ -7,25 +7,27 @@
 
 
 
-void top_function(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
+void scone_engine(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
 #pragma HLS INTERFACE s_axilite register port=entry bundle=CONTROL_BUS
 #pragma HLS INTERFACE s_axilite register port=return bundle=CONTROL_BUS
 #pragma HLS INTERFACE s_axilite register port=op bundle=CONTROL_BUS
 	static unsigned short count;
-#pragma HLS reset variable=count
+#pragma HLS RESET variable=count off
 	static ap_uint<8> marks[N_NODES];
-#pragma HLS reset variable=marks
+#pragma HLS RESET variable=marks off
 #pragma HLS RESOURCE variable=marks core=RAM_2P_URAM
 	static hls::stream<node_t> in1;
-		#pragma HLS STREAM variable=in1 depth=1024
+#pragma HLS RESET variable=in1 off
+#pragma HLS STREAM variable=in1 depth=1024
 	switch (op) {
 	case UPSCAN:  // Upscan operation
 	{
 		scan(entry,false,true,count,marks,in1);
 #ifndef __SYNTHESIS__
-		std::cout << "Se han escrito los siguientes nodos en esta operacion: " << std::endl;
+		std::cout << "Se han escrito los siguientes nodos en UPSCAN: " << std::endl;
 		for (int i = 0; i < N_NODES;i++) if (marks[i].test(count)) std::cout << "El nodo " << i+1 << " tiene la marca " << count << " en posicion " << marks[i][count] << std::endl;
 #endif
+		for (int i = 0; i < N_NODES;i++) if (marks[i].test(count)) path.write(i+1);
 		break;
 
 	}
@@ -34,9 +36,11 @@ void top_function(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
 	{
 		scan(entry,false,false,count,marks,in1);
 #ifndef __SYNTHESIS__
-		std::cout << "Se han escrito los siguientes nodos en esta operacion: " << std::endl;
+		std::cout << "Se han escrito los siguientes nodos en DOWNSCAN: " << std::endl;
 		for (int i = 0; i < N_NODES;i++) if (marks[i].test(count)) std::cout << "El nodo " << i+1 << " tiene la marca " << count << " en posicion " << marks[i][count] << std::endl;
 #endif
+		for (int i = 0; i < N_NODES;i++) if (marks[i].test(count)) path.write(i+1);
+
 		break;
 	}
 	case PROPAGATE :  // Propagate marked nodes with cmd_scone_t relation and mark them
@@ -54,9 +58,10 @@ void top_function(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
 		}
 
 #ifndef __SYNTHESIS__
-		std::cout << "Se han escrito los siguientes nodos en esta operacion: " << std::endl;
+		std::cout << "Se han escrito los siguientes nodos en PROPAGATE: " << std::endl;
 		for (int i = 0; i < N_NODES;i++) if (marks[i].test(count)) std::cout << "El nodo " << i+1 << " tiene la marca " << count << " en posicion " << marks[i][count] << std::endl;
 #endif
+		for (int i = 0; i < N_NODES;i++) if (marks[i].test(count)) path.write(i+1);
 		break;
 	}
 	case INTERSECTION : // Intersection: Which marks?
