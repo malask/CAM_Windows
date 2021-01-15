@@ -116,19 +116,23 @@ int main()
 		return Status;
 	}
 
-	/* Reset FIFO */
-	/* Check for the Reset value */
-	Status = XLlFifo_Status(&fifo_ip);
-	XLlFifo_IntClear(&fifo_ip,0xffffffff);
-	Status = XLlFifo_Status(&fifo_ip);
-	if(Status != 0x0) {
-		xil_printf("\n ERROR : Reset value of ISR0 : 0x%x\t"
-				"Expected : 0x0\n\r",
-				XLlFifo_Status(&fifo_ip));
-		return XST_FAILURE;
-	}
+	printf("---clear--\n");
 
-	cmd = (64<<2) & MASK_CMD; // (entry,op)
+	cmd = 1;
+
+	XScone_engine_Set_entry_V(&scone_ip,cmd);
+	XScone_engine_Set_op(&scone_ip,CLEAR);
+
+
+	XScone_engine_Start(&scone_ip);
+
+	while (!XScone_engine_IsIdle(&scone_ip));
+	print_status(&scone_ip);
+
+
+	printf("---upscan--\n");
+
+	cmd = (127<<2) & MASK_CMD; // (entry,op)
 
 	XScone_engine_Set_entry_V(&scone_ip,cmd);
 	XScone_engine_Set_op(&scone_ip,UPSCAN);
@@ -137,7 +141,6 @@ int main()
 
 	XScone_engine_Start(&scone_ip);
 
-	print_status(&scone_ip);
 
 	while (!XScone_engine_IsIdle(&scone_ip));
 
@@ -145,13 +148,6 @@ int main()
 
 	printf("Bye!\n");
 
-
-
-	if (XLlFifo_iRxOccupancy(&fifo_ip)) {
-		printf("Hay datos\n");
-	} else {
-		printf("No hay datos\n");
-	}
 
 	printf("---propagate--\n");
 
@@ -172,15 +168,10 @@ int main()
 
 	printf("Bye!\n");
 
-	if (XLlFifo_iRxOccupancy(&fifo_ip)) {
-		printf("Hay datos\n");
-	} else {
-		printf("No hay datos\n");
-	}
 
 	printf("---downscan--\n");
 
-	cmd = (47<<2) & MASK_CMD;
+	cmd = (8<<2) & MASK_CMD;
 
 	XScone_engine_Set_entry_V(&scone_ip,cmd);
 	XScone_engine_Set_op(&scone_ip,DOWNSCAN);
@@ -197,11 +188,6 @@ int main()
 
 	printf("Bye!\n");
 
-	if (XLlFifo_iRxOccupancy(&fifo_ip)) {
-		printf("Hay datos\n");
-	} else {
-		printf("No hay datos\n");
-	}
 
 	printf("---INTERSECTION--\n");
 
@@ -222,11 +208,6 @@ int main()
 
 	printf("Bye!\n");
 
-	if (XLlFifo_iRxOccupancy(&fifo_ip)) {
-		printf("Hay datos\n");
-	} else {
-		printf("No hay datos\n");
-	}
 	printf("---clear--\n");
 
 	cmd = 1;
@@ -246,15 +227,31 @@ int main()
 
 	printf("Bye!\n");
 
-	if (XLlFifo_iRxOccupancy(&fifo_ip)) {
-		printf("Hay datos\n");
-	} else {
-		printf("No hay datos\n");
-	}
+	unsigned int fifodata;
+	unsigned char emptythreshold = 5;
 
-	for (i = 0; i < 10; i++) {
-	printf("Len FIFO %d\n",XLlFifo_RxGetWord(&fifo_ip));
-	}
+	XLlFifo_IntDisable(&fifo_ip, XLLF_INT_ALL_MASK);
+	XLlFifo_IntEnable(&fifo_ip, XLLF_INT_RFPE_MASK);
+
+		emptythreshold = 5;
+
+		while (emptythreshold >0)
+		{
+			fifodata = XLlFifo_RxGetWord(&fifo_ip);
+			u32 intstatus = XLlFifo_Status(&fifo_ip);
+			unsigned char *word;
+			word = (unsigned char *)&fifodata;
+			printf("FIFO [%d] [%d] [%d] [%d]\n\r",word[0],word[1],word[2],word[3]);
+			if (intstatus & XLLF_INT_RFPE_MASK) {
+				printf("Almost empty %d\r\n",emptythreshold);
+				emptythreshold--;
+
+			}
+		}
+
+//	for (i = 0; i < 128; i++) {
+//		printf("Len FIFO %d\n",XLlFifo_RxGetWord(&fifo_ip));
+//	}
 	printf("Bye!\n");
 
 	cleanup_platform();
