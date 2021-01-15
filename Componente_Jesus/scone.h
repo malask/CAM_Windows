@@ -60,7 +60,8 @@ typedef enum {
 
 
 	void busqueda_cam (node_t nodo, rel_t relationship, bool fatherSearch, hls::stream<node_t> &result);
-	void scone_engine (cmd_scone_t nodo, scone_ops op, hls::stream<node_t> &path);
+	void scone_engine (cmd_scone_t nodo, scone_ops op, hls::stream<node_t> &path,ap_uint<8> marks[N_NODES]);
+	//void scone_engine (cmd_scone_t nodo, scone_ops op, hls::stream<node_t> &path);
 	void scan(cmd_scone_t word, bool propagate, bool upOrDown, unsigned short &count, ap_uint<8> marks[TREE_SIZE], hls::stream<node_t> &in1);
 
 #endif

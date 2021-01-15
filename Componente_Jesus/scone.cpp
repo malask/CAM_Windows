@@ -4,18 +4,20 @@
 #include <ctype.h>
 #include <string.h>
 
+//static ap_uint<8> marks[N_NODES];
 
-
-
-void scone_engine(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
+//void scone_engine(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
+void scone_engine(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path,ap_uint<8> marks[N_NODES]) {
 #pragma HLS INTERFACE s_axilite register port=entry bundle=CONTROL_BUS
 #pragma HLS INTERFACE s_axilite register port=return bundle=CONTROL_BUS
 #pragma HLS INTERFACE s_axilite register port=op bundle=CONTROL_BUS
-	static unsigned short count;
+	static unsigned short count = 0;
 #pragma HLS RESET variable=count off
-	static ap_uint<8> marks[N_NODES];
-#pragma HLS RESET variable=marks off
-#pragma HLS RESOURCE variable=marks core=RAM_2P_URAM
+
+//static ap_uint<8> marks[N_NODES];
+//#pragma HLS RESET variable=marks off
+
+
 	static hls::stream<node_t> in1;
 #pragma HLS RESET variable=in1 off
 #pragma HLS STREAM variable=in1 depth=1024
@@ -78,7 +80,7 @@ void scone_engine(cmd_scone_t entry, scone_ops op, hls::stream<node_t> &path) {
 		count = 0;
 	clear_loop: for (int i = 0; i < N_NODES; i++) {
 #pragma HLS PIPELINE
-		marks[i] = 0;
+		marks[i] = ap_uint<8>(0);
 
 
 	}
@@ -103,10 +105,18 @@ void scan(cmd_scone_t word,bool propagate, bool upOrDown, unsigned short &count,
 				salida = in1.read();
 				if (salida != EOT) {
 					if (!propagate) busqueda_cam(salida, rel, upOrDown, in1);
-					marks[salida-1][count] = 1;
+					marks[salida-1].set(count);
+//					ap_uint<8> val = marks[salida-1];
+//					val(count,count) = 1;
+//					marks[salida-1] = val;
 				}
 			}
-			if (!propagate) marks[nodo-1][count] = 1;
+			if (!propagate) {
+				marks[nodo-1].set(count);
+//				ap_uint<8> val = marks[nodo-1];
+//									val(count,count) = 1;
+//						marks[nodo-1] = val;
+			}
 		return;
 	}
 /*void propagate(cmd_scone_t word, unsigned short &count, ap_uint<8> marks[TREE_SIZE], hls::stream<node_t> &in1) {
